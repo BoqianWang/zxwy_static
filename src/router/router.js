@@ -42,11 +42,21 @@ const addfullgift = r => require.ensure([],()=>r(require('../page/activity/addFu
 const orderfenxi = r => require.ensure([],()=>r(require('../page/dataAnalysis/orderAnalysis/orderanalysis')),'orderfenxi');
 const bizlist = r => require.ensure([],()=>r(require('../page/bizmanage/bizList.vue')),'bizlist');
 const bizdetail = r => require.ensure([],()=>r(require('../page/bizmanage/bizDetail.vue')),'bizdetail');
+//店铺详情审核
+const shopAudit = r => require.ensure([],()=>r(require('../page/bizmanage/shopAudit.vue')),'shopAudit');
+
+//店铺
 export default{
-  routes:[{
+  routes:[
+  {
     path:'/',
     component:login
-  },{
+  },
+  {
+    path:'/login',
+    component:login
+  },
+  {
     path:'/manage',
     component:manage,
     children:[{
@@ -121,6 +131,13 @@ export default{
     },{
       path:'/bizdetail',
       component:bizdetail
-    }]
+    },
+    {
+      path: '/shopAudit',
+      component: shopAudit
+    }
+
+
+    ]
   }]
 }

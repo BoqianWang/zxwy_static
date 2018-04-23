@@ -11,9 +11,14 @@ axios.defaults.timeout = 1000000;    //响应时间
 // axios.defaults.withCredentials=true;
 // axios.defaults.headers.common['faker'] = '123333';
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
-// axios.defaults.baseURL = 'http://192.169.18.77:8081/zxwy-operator'; //本地配置接口地址
-// axios.defaults.baseURL = 'http://test.zhongxiang51.com/zxwy-operator'; //测试配置接口地址
-axios.defaults.baseURL = 'http://operator.zhongxiang51.com'; //正式配置接口地址
+
+// axios.defaults.baseURL = 'http://192.169.18.77:8081/zxwy-operator'; 
+//本地配置接口地址
+axios.defaults.baseURL = 'http://192.169.18.88:9001/zxwy-operator';
+
+// axios.defaults.baseURL = 'http://test.zhongxiang51.com/zxwy-operator'; 
+//测试配置接口地址
+// axios.defaults.baseURL = 'http://operator.zhongxiang51.com'; //正式配置接口地址
 //添加请求拦截器
 axios.interceptors.request.use((config) => {
   // 在发送请求之前做某件事
@@ -59,7 +64,7 @@ axios.interceptors.request.use((config) => {
 export default {
     //fetchPost  请求方式
     fetchPost: function(url, params) {
-       console.log(params);
+       console.log(url);
         return new Promise((resolve, reject) => {
             axios.post(url, params)
                 .then(response => {

@@ -17,6 +17,23 @@ var router = new VueRouter(routerConfig)
 Vue.use(VueRouter);
 Vue.use(ElementUI);
 
+//判断用户是否已经登录
+router.beforeEach((to, from, next) => {
+	if(to.fullPath == '/') {
+		if(localStorage.token) {
+			next('/manage');
+		} else {
+			next();
+		} 
+	} else {
+		if(localStorage.token) {
+			next();
+		} else {
+			next('/')
+		}
+	}
+});
+
 new Vue({
     el: '#app',
     router: router,

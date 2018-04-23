@@ -32,59 +32,25 @@
           <el-radio-button :label="'审核已通过'+yesAuditNumber" @click.native="changeListClick(1)"></el-radio-button>
         </el-radio-group> -->
       </div>
-      <el-table
-      ref="multipleTable"
-      v-loading="loading"
-      :data="cerlists"
-      tooltip-effect="dark"
-      style="width: 100%"
-      header-row-class-name="headerClass"
-      max-height="600"
-      border>
-      <el-table-column
-        type="selection"
-        width="55">
-      </el-table-column>
-      <el-table-column
-        prop="bizUserName"
-        label="账号">
-      </el-table-column>
-      <el-table-column
-        prop="shopName"
-        label="店铺名称">
-      </el-table-column>
-      <el-table-column
-        prop="legalPerson"
-        label="法人">
-      </el-table-column>
-      <el-table-column
-        prop="shopStreet"
-        label="店铺地址">
-      </el-table-column>
-      <el-table-column
-        prop="applyTime"
-        label="申请时间">
-      </el-table-column>
-      <el-table-column
-        prop="checkStatus"
-        label="审核状态">
-      </el-table-column>
-      <el-table-column
-        prop="address"
-        label="操作">
-        <template slot-scope="scope">
-            <el-button
-              size="mini" @click="czClick(scope.row)">操作</el-button>
-
-        </template>
-      </el-table-column>
-    </el-table>
+      <el-table ref="multipleTable" v-loading="loading" :data="cerlists" tooltip-effect="dark" style="width: 100%" header-row-class-name="headerClass" max-height="600" border>
+          <el-table-column type="selection" width="55"></el-table-column>
+          <el-table-column prop="bizUserName" label="账号"></el-table-column>
+          <el-table-column prop="shopName" label="店铺名称"></el-table-column>
+          <el-table-column prop="legalPerson" label="法人"></el-table-column>
+          <el-table-column prop="shopStreet" label="店铺地址"></el-table-column>
+          <el-table-column prop="applyTime" label="申请时间"></el-table-column>
+          <el-table-column prop="checkStatus" label="审核状态"></el-table-column>
+          <el-table-column prop="address" label="操作">
+            <template slot-scope="scope">
+                <el-button size="mini" @click="czClick(scope.row)">操作</el-button>
+                <a :href="'#/shopAudit?bizId=' + scope.row.bizId">
+                  <el-button size="mini" @click="checkDetail(scope.row)">查看</el-button>
+                </a>
+            </template>
+          </el-table-column>
+        </el-table>
     <div class="block">
-      <el-pagination
-        layout="prev, pager, next"
-        :page-size='pageSize'
-        :total="totalPage"
-        @current-change="handleCurrentChange">
+      <el-pagination layout="prev, pager, next" :page-size='pageSize' :total="totalPage" @current-change="handleCurrentChange">
       </el-pagination>
     </div>
     </div>
@@ -172,7 +138,17 @@ export default {
       yesAuditNumber:0,
       // radio5:'待审核',
       loading: true,
-      cerlists:[],
+      cerlists:[
+        {
+          bizUserName: '1471047476',
+          shopName: '王者店铺',
+          legalPerson: '王贞浩',
+          shopStreet: '广东深圳',
+          applyTime: '2018-4-18',
+          checkStatus: '正在审核',
+          address: 'nothing'
+        }
+      ],
       pageNo:1,
       pageSize:20,
       status:0,
@@ -191,6 +167,13 @@ export default {
     this.apirequest();
   },
   methods:{
+    //查看店铺详情
+    checkDetail: function(info) {
+      this.$router.push({
+        path: '/shopAudit'
+      })
+      // console.log()
+    },
     apirequest:function(){
       var startTime = '';
       var endTime  = '';
@@ -225,6 +208,9 @@ export default {
       // this.apirequest();
     },
     czClick:function(item){
+      
+      console.log(item);
+      return;
       api.bizcerDetail(item.shopAuthenticateId)
       .then(res=>{
         this.select_bizcer = res.data;
