@@ -8,7 +8,10 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import './style/common.scss'
 
-import api from './config/api'
+import api from './config/api';
+
+//引入过滤器
+import './config/fitler.js';
 
 
 // import axios from 'axios'

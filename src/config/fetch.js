@@ -64,11 +64,9 @@ axios.interceptors.request.use((config) => {
 export default {
     //fetchPost  请求方式
     fetchPost: function(url, params) {
-       console.log(url);
         return new Promise((resolve, reject) => {
             axios.post(url, params)
                 .then(response => {
-                  console.log(response.data);
                     if(response.data.code==0){
                       resolve(response.data);
                     }else {

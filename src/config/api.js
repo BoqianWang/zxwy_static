@@ -347,5 +347,10 @@ export default{
    },
    bizgetRate:function(bizId){
      return fetch.fetchPost('bizServiceRateManage/getById',{bizId:bizId});
-   }
+   },
+
+   /**
+    * 编辑认证资料
+    */
+   
 }

@@ -43,9 +43,9 @@
           <el-table-column prop="address" label="操作">
             <template slot-scope="scope">
                 <el-button size="mini" @click="czClick(scope.row)">操作</el-button>
-                <a :href="'#/shopAudit?bizId=' + scope.row.bizId">
+                <!-- <a :href="'#/shopAudit?bizId=' + scope.row.bizId + '&shopAuthenticateId=' + scope.row.shopAuthenticateId"> -->
                   <el-button size="mini" @click="checkDetail(scope.row)">查看</el-button>
-                </a>
+                <!-- </a> -->
             </template>
           </el-table-column>
         </el-table>
@@ -163,6 +163,10 @@ export default {
       cerStatus:'3'
     }
   },
+  activated() {
+
+    
+  },
   mounted(){
     this.apirequest();
   },
@@ -170,9 +174,13 @@ export default {
     //查看店铺详情
     checkDetail: function(info) {
       this.$router.push({
-        path: '/shopAudit'
+        path: '/shopAudit',
+        query: {
+          bizId: info.bizId,
+          shopAuthenticateId: info.shopAuthenticateId
+        }
       })
-      // console.log()
+      console.log(info)
     },
     apirequest:function(){
       var startTime = '';

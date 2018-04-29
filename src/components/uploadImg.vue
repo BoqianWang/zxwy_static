@@ -1,8 +1,8 @@
 <template>
 	<div class="width-100 height-100">
-		<div class="width-100 height-100 rel upload-wrap" :style="'background-image: url(' + uploadSrc + '); background-size: cover;'">
+		<div class="width-100 height-100 rel upload-wrap" :style="'background-image: url(' + imgSrc + '); background-size: cover;'">
 			<div class="abs option-wrap">
-				<el-button class="width-100" type="primary">{{'预览'}}</el-button>
+				<el-button size="small" class="width-100" type="primary" @click="viewImage">{{'预览'}}</el-button>
 				<el-upload class="upload-img m-t-10" 
 				:show-file-list="false" 
 				:action="uploadUrl" 
@@ -11,68 +11,111 @@
 				:on-progress="progress" 
 				:on-success="success"
 				:before-upload="beforeUpload">
-					<el-button type="primary">{{'点击上传'}}</el-button>
+					<el-button type="primary" size="small">{{'点击上传'}}</el-button>
 				</el-upload>
 			</div>
-			<el-progress v-show="progressShow" 
+			<el-progress class='width-100 abs upload-progress' v-show="progressShow" 
 			:text-inside="true" 
 			:show-text="true" 
 			:stroke-width="20" 
 			:percentage="percent" 
 			:status="successType"></el-progress>
 		</div>
+		<el-dialog
+		  title="图片详情"
+		  :visible.sync="imageInfo"
+		  width="720px" class="dialog-title">
+		  <div>
+		  	  <img :src="defaultImage" width="100%">
+		  </div>
+		  <div class="text-center">
+			  <span slot="footer" class="dialog-footer">
+			    <el-button @click="imageInfo = false">取 消</el-button>
+			    <el-button type="primary" @click="imageInfo = false">确 定</el-button>
+			  </span>
+		  </div>
+		</el-dialog>
 	</div>
 </template>
 <style>
     .option-wrap {
-    	bottom: 0;
+    	bottom: 20px;
     	left: 50%;
     	transform: translate3d(-50%, 0, 0);
-    }
-    .upload-wrap {
-
     }
 	.width-100,.option-wrap .el-upload {
 		width: 100%;
 	}
+	.upload-progress {
+		left: 0;
+		bottom: 0;
+	}
+	/*.upload-wrap .el-progress.is-success .el-progress-bar__inner {
+		background: rgba(103, 103, 58, .9);
+	}*/
 </style>
 <script>
-	// import fetch from '@/config/fetch.js';
+	/**
+	 * 图片上传组件
+	 * <uploadImg :imgParams="{...}" :src='...'></uploadImg>
+	 * imgParams  上传图片的参数
+	 * src		  当前图片路径
+	 */
+	import { Message } from 'element-ui';
 	export default {
-		props: ['imgParams', 'uploadSrc'],
+		props: ['imgParams', 'src'],
 		data() {
 			return {
+				//请求地址
 				uploadUrl: 'http://192.169.18.88:9001/zxwy-operator' + '/businessmanage/v3.0/file',
-				params: {},
 				percent: 50,
+				//是否显示进度条
 				progressShow: false,
-				successType: 'success'
+				// 进度条颜色
+				successType: 'exception',
+
+				// 是否正在上传
+				isUpload: false,
+				imageInfo: false,
+				defaultImage: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1524629017039&di=f4953414b1f45510e76b52ce65e0aec9&imgtype=0&src=http%3A%2F%2Fwww.pptok.com%2Fd%2Ffile%2Fp%2F20151229%2F5c9a3491df3102de0dcaa36b37b5157d.jpg'
+			}
+		},
+		computed: {
+			imgSrc() {
+				return this.src || this.defaultImage;
 			}
 		},
 		mounted() {
-			// console.log(fetch);
 			this.imgParams['token'] = localStorage.token;
-			console.log(this.uploadSrc);
 		},
 		methods: {
+			//预览图片
+			viewImage() {
+				// console.log(this.imgSrc);
+				this.imageInfo = true
+				this.defaultImage = this.src ?  this.src : this.defaultImage;
+			},
 			// 上传之前
 			beforeUpload() {
+				if(this.isUpload) {
+					Message.error('图片正在上传');
+					return false;
+				}
 				this.progressShow = true;
+				this.isUpload = true;
 			},
 			// 上传中
 			progress(res) {
 				this.percent = res.percent;
-				console.log(res);
 			},
 			// 上传成功
 			success(res) {
-				console.log(res);
 				if(res.code == 0) {
 					this.successType = 'success';
-					this.uploadSrc = res.data.url;
-					this.$emit('input', res.data.url);
+					this.src = res.data.url;
+					this.isUpload = false
 				} else {
-					Message.error(res.data.msg);
+					Message.error(res.msg);
 				}
 			},
 			// 上传失败
