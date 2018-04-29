@@ -7,7 +7,7 @@
 <script>
 	/**
 	 * vue加载外部js
-	 * <routerScript @loadFinsh="hanlde" src="http://wwww.jquery.cdn/2.0-min.js"></routerScript>
+	 * <router-script @loadFinsh="hanlde" src="http://wwww.jquery.cdn/2.0-min.js"></router-script>
 	 *
 	 * @loadfinsh   加载完成js后执行的函数
 	 * src          路径

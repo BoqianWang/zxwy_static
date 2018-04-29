@@ -26,7 +26,7 @@
 		  :visible.sync="imageInfo"
 		  width="720px" class="dialog-title">
 		  <div>
-		  	  <img :src="defaultImage" width="100%">
+		  	  <img :src="imgSrc" width="100%">
 		  </div>
 		  <div class="text-center">
 			  <span slot="footer" class="dialog-footer">
@@ -63,7 +63,7 @@
 	 */
 	import { Message } from 'element-ui';
 	export default {
-		props: ['imgParams', 'src'],
+		props: ['imgParams', 'value'],
 		data() {
 			return {
 				//请求地址
@@ -77,12 +77,12 @@
 				// 是否正在上传
 				isUpload: false,
 				imageInfo: false,
-				defaultImage: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1524629017039&di=f4953414b1f45510e76b52ce65e0aec9&imgtype=0&src=http%3A%2F%2Fwww.pptok.com%2Fd%2Ffile%2Fp%2F20151229%2F5c9a3491df3102de0dcaa36b37b5157d.jpg'
+				imageUrl: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1524629017039&di=f4953414b1f45510e76b52ce65e0aec9&imgtype=0&src=http%3A%2F%2Fwww.pptok.com%2Fd%2Ffile%2Fp%2F20151229%2F5c9a3491df3102de0dcaa36b37b5157d.jpg'
 			}
 		},
 		computed: {
 			imgSrc() {
-				return this.src || this.defaultImage;
+				return this.imageUrl = this.value ? this.value : this.imageUrl;
 			}
 		},
 		mounted() {
@@ -91,9 +91,7 @@
 		methods: {
 			//预览图片
 			viewImage() {
-				// console.log(this.imgSrc);
-				this.imageInfo = true
-				this.defaultImage = this.src ?  this.src : this.defaultImage;
+				this.imageInfo = true;
 			},
 			// 上传之前
 			beforeUpload() {
@@ -112,15 +110,29 @@
 			success(res) {
 				if(res.code == 0) {
 					this.successType = 'success';
-					this.src = res.data.url;
-					this.isUpload = false
+					this.isUpload = false;
+
+					this.$message({
+			          message: '图片上传成功',
+			          type: 'success'
+			        });
+
+					this.$emit('input', res.data.url);
+					this.hideProgress();
 				} else {
 					Message.error(res.msg);
 				}
 			},
 			// 上传失败
 			error(res) {
-				this.successType = 'exception'
+				this.successType = 'exception';
+				this.hideProgress();
+			},
+			// 隐藏进度条
+			hideProgress() {
+				setTimeout(() => {
+						this.progressShow = false;
+				}, 2000)
 			}
 		}
 

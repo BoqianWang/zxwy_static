@@ -3,7 +3,8 @@
     element-loading-text="拼命加载中"
     element-loading-spinner="el-icon-loading"
     element-loading-background="rgba(0, 0, 0, 0.8)">
-    	<router-script @loadFinsh="finsh" src='http://webapi.amap.com/maps?v=1.4.6&key=5bffe31c75ddac4470b6104b67a7e872'></router-script>
+    	<!-- 加载高德地图 -->
+    	<router-script @loadFinsh="mapFinsh" src='http://webapi.amap.com/maps?v=1.4.6&key=5bffe31c75ddac4470b6104b67a7e872'></router-script>
 		<!-- 基本信息 -->
 		<el-row :gutter="20" class="base-info audit-block-h">
 		  <el-col :span="14" class="bg-white">
@@ -17,7 +18,7 @@
 			  			 <el-col :span="6">
 			  			 	<div class="base-shop-img rel">
 			  			 		<div class="abs height-100 width-100" style="top: 0; left: 0;">
-				  			 		<uploadImg :imgParams="{type: 1, bizId: bizId}" :src="shopInfo.shopLogo"></uploadImg>
+				  			 		<uploadImg :imgParams="{type: 1, bizId: bizId}" v-model="shopInfo.shopLogo"></uploadImg>
 			  			 		</div>
 			  			 	</div>
 			  			 </el-col>
@@ -178,7 +179,7 @@
 						  			<!-- <p class="color-legal-per">+添加</p>
 									<p class="color-6">店铺头像</p> -->
 									<!-- 身份证正面 -->
-									<uploadImg :imgParams="{type: 4, bizId: bizId}" :src="shopInfo.idcardUpward"></uploadImg>
+									<uploadImg :imgParams="{type: 4, bizId: bizId}" v-model="shopInfo.idcardUpward"></uploadImg>
 						  		</div>
 						    </div>
 						  </el-col>
@@ -186,7 +187,7 @@
 						  	<div class="add-person-img rel">
 						  		<div class="abs add-legal-per font-18 text-center">
 						  			<!-- 身份证反面 -->
-						  			<uploadImg :imgParams="{type: 5, bizId: bizId}" :src="shopInfo.idcardDown"></uploadImg>
+						  			<uploadImg :imgParams="{type: 5, bizId: bizId}" v-model="shopInfo.idcardDown"></uploadImg>
 						  			<!-- <p class="color-legal-per">+添加</p>
 									<p class="color-6">店铺头像</p> -->
 						  		</div>
@@ -196,7 +197,7 @@
 						  	<div class="add-person-img rel">
 						  		<div class="abs add-legal-per font-18 text-center">
 						  			<!-- 手持身份证 -->
-						  			<uploadImg :imgParams="{type: 6, bizId: bizId}" :src="shopInfo.handheldIdcard"></uploadImg>
+						  			<uploadImg :imgParams="{type: 6, bizId: bizId}" v-model="shopInfo.handheldIdcard"></uploadImg>
 						  			<!-- <p class="color-legal-per">+添加</p>
 									<p class="color-6">店铺头像</p> -->
 						  		</div>
@@ -239,7 +240,7 @@
 						  			<!-- <p class="color-legal-per">+添加</p>
 									<p class="color-6">店铺头像</p> -->
 									<!-- 银行卡照片 -->
-						  			<uploadImg :imgParams="{type: 9, bizId: bizId}" :src="shopInfo.bankCard"></uploadImg>
+						  			<uploadImg :imgParams="{type: 9, bizId: bizId}" v-model="shopInfo.bankCard"></uploadImg>
 						  		</div>
 						    </div>
 						  </el-col>
@@ -288,7 +289,7 @@
 						  		<div class="abs add-legal-per font-18 text-center">
 						  			<!-- <p class="color-legal-per">+添加</p>
 									<p class="color-6">餐饮许可证</p> -->
-									<uploadImg :imgParams="{type: 2, bizId: bizId}" :src="shopInfo.cateringLicence"></uploadImg>
+									<uploadImg :imgParams="{type: 2, bizId: bizId}" v-model="shopInfo.cateringLicence"></uploadImg>
 						  		</div>
 						  	</div>
 		  				</el-col>
@@ -297,7 +298,7 @@
 						  		<div class="abs add-legal-per font-18 text-center">
 						  			<!-- <p class="color-legal-per">+添加</p>
 									<p class="color-6">营业执照</p> -->
-									<uploadImg :imgParams="{type: 3, bizId: bizId}" :src="shopInfo.businessLicense"></uploadImg>
+									<uploadImg :imgParams="{type: 3, bizId: bizId}" v-model="shopInfo.businessLicense"></uploadImg>
 						  		</div>
 						  	</div>
 						</el-col>
@@ -306,7 +307,7 @@
 						  		<div class="abs add-legal-per font-18 text-center">
 						  			<!-- <p class="color-legal-per">+添加</p>
 									<p class="color-6">店内景照1</p> -->
-									<uploadImg :imgParams="{type: 7, bizId: bizId}" :src="shopInfo.shopInterio1Pic"></uploadImg>
+									<uploadImg :imgParams="{type: 7, bizId: bizId}" v-model="shopInfo.shopInterio1Pic"></uploadImg>
 						  		</div>
 						  	</div>
 						</el-col>
@@ -315,7 +316,7 @@
 						  		<div class="abs add-legal-per font-18 text-center">
 						  			<!-- <p class="color-legal-per">+添加</p>
 									<p class="color-6">店内景照2</p> -->
-									<uploadImg :imgParams="{type: 8, bizId: bizId}" :src="shopInfo.shopInterio2Pic"></uploadImg>
+									<uploadImg :imgParams="{type: 8, bizId: bizId}" v-model="shopInfo.shopInterio2Pic"></uploadImg>
 						  		</div>
 						  	</div>
 						</el-col>
@@ -660,16 +661,22 @@
 				//店铺类型
 				classifyNameList:[],
 				//页面加载
-				loading: false
+				loading: true,
+				//加载地图
+				mapLoading: true,
 			}
 		},
 		activated() {
-			console.log(1);
+			this.bizId = this.$route.query.bizId;
+			this.shopAuthenticateId = this.$route.query.shopAuthenticateId;
+			this.loading = true;
 			this.getInfo();
+			console.log('activated');
 		},
 		mounted() {
 			// console.log(AMap)
 			// this.getInfo();
+			// console.log('mounted');
 		},
 		computed: {
 			//监听行业列表变化,更新店铺类型
@@ -697,8 +704,9 @@
 			}
 		},
 		methods: {
-			finsh() {
-				console.log(AMap)
+			//地图加载完成回掉函数
+			mapFinsh() {
+				this.mapLoading = true;
 			},
 			//显示弹层
 			showDialog(type) {
@@ -706,6 +714,13 @@
 				this.dialogType = type;
 				//商店基本信息
 				if(type == 'baseInfo') {
+					if(!this.mapLoading) {
+						this.$message({
+				          message: '地图加载中,请稍等!',
+				          type: 'error'
+				        });
+				        return;
+					}
 					this.baseInfoDetail = {
 						shopName: this.shopInfo['shopName'],
 						merFullName: this.shopInfo['merFullName'],
@@ -725,8 +740,6 @@
 						provincesCode: this.shopInfo['provincesCode'],
 						cityCode: this.shopInfo['cityCode'],
 						districtCode: this.shopInfo['districtCode'],
-						// induName: this.shopInfo['induName'],
-						// classifyName: this.shopInfo['classifyName'],
 					};
 					//地图初始化
 					setTimeout(() => {
@@ -760,7 +773,7 @@
 			hideDialog() {
 				this.dialogStauts[this.dialogType] = false;
 			},
-			//确定审核
+			//确定审核状态
 			auditShopInfo() {
 				let params = {
 					bizId: this.bizId
