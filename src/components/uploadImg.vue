@@ -57,17 +57,18 @@
 <script>
 	/**
 	 * 图片上传组件
-	 * <uploadImg :imgParams="{...}" :src='...'></uploadImg>
+	 * <uploadImg :imgParams="{...}" v-model='...' url=".."></uploadImg>
 	 * imgParams  上传图片的参数
 	 * src		  当前图片路径
+	 * url        上传图片地址   可填
 	 */
-	import { Message } from 'element-ui';
+	import api from '../config/fetch.js';
 	export default {
 		props: ['imgParams', 'value'],
 		data() {
 			return {
 				//请求地址
-				uploadUrl: 'http://192.169.18.88:9001/zxwy-operator' + '/businessmanage/v3.0/file',
+				uploadUrl: this.url || api.baseURL + '/businessmanage/v3.0/file',
 				percent: 50,
 				//是否显示进度条
 				progressShow: false,
@@ -81,6 +82,7 @@
 			}
 		},
 		computed: {
+			//监听路径是否已经改变
 			imgSrc() {
 				return this.imageUrl = this.value ? this.value : this.imageUrl;
 			}
@@ -120,12 +122,16 @@
 					this.$emit('input', res.data.url);
 					this.hideProgress();
 				} else {
-					Message.error(res.msg);
+					this.$message({
+			          message: '图片上传失败',
+			          type: 'error'
+			        });
 				}
 			},
 			// 上传失败
 			error(res) {
 				this.successType = 'exception';
+				this.isUpload = false;
 				this.hideProgress();
 			},
 			// 隐藏进度条

@@ -44,7 +44,7 @@
             <template slot-scope="scope">
                 <el-button size="mini" @click="czClick(scope.row)">操作</el-button>
                 <!-- <a :href="'#/shopAudit?bizId=' + scope.row.bizId + '&shopAuthenticateId=' + scope.row.shopAuthenticateId"> -->
-                  <el-button size="mini" @click="checkDetail(scope.row)">查看</el-button>
+                  <el-button type="danger" size="mini" @click="checkDetail(scope.row)">查看</el-button>
                 <!-- </a> -->
             </template>
           </el-table-column>

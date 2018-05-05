@@ -147,17 +147,37 @@
 		  			<h4>平台抽点</h4>
 		  		</div>
 		  		<div class="commission-block p-t-10 height-140">
-		  			<div class="text-center p-10">
-		  				<p class="font-24">0.35%</p>
+		  			<div class="flex-wrap text-center">
+		  				<p class="flex-1">
+		  					<span class="font-24">{{shopInfo.cashRate}}%</span><br>
+		  					<span class="font-12 color-7">手续费</span>	
+		  				</p>
+		  				<p class="flex-1">
+		  					<span class="font-24">{{shopInfo.serviceRate}}%</span><br>
+		  					<span class="font-12 color-7">清分费用</span>
+		  				</p>
+		  			</div>
+		  			<div class="flex-wrap text-center p-t-10">
+		  				<p class="flex-1">
+		  					<span class="font-24">{{shopInfo.alipayRate}}%</span><br>
+		  					<span class="font-12 color-7">支付宝费率</span>	
+		  				</p>
+		  				<p class="flex-1">
+		  					<span class="font-24">{{shopInfo.wxRate}}%</span><br>
+		  					<span class="font-12 color-7">微信费率</span>
+		  				</p>
+		  			</div>
+		  			<!-- <div class="text-center p-10">
+		  				<p class="font-24">{{shopInfo.cashRate}}%</p>
 		  				<p class="font-12 color-7">手续费</p>
 		  			</div>
 		  			<div class="text-center p-b-10">
-		  				<p class="font-24">14</p>
+		  				<p class="font-24">{{shopInfo.serviceRate}}%</p>
 		  				<p class="font-12 color-7">清分费用</p>
-		  			</div>
+		  			</div> -->
 		  		</div>
 		  		<div class="text-center p-10">
-		  			<el-button class="audit-edit" type="primary" size="mini">编 辑</el-button>
+		  			<el-button class="audit-edit" type="primary" size="mini" @click="showDialog('commissionInfo')">编 辑</el-button>
 		  		</div>
 		  	</div>
 		  </el-col>
@@ -254,10 +274,20 @@
 						  			</span>
 						  		</p>
 						  		<p class="flex-wrap p-b-10">
-						  			<span class="d-left break-word">卡号:</span>
-						  			<span>
+						  			<span class="d-left">卡号:</span>
+						  			<span class="break-word">
 						  				<!-- 62145621234123442321 -->
 						  				{{shopInfo.bankCode || '未填写'}}		
+						  			</span>
+						  		</p>
+						  		<p class="flex-wrap p-b-10">
+						  			<span class="d-left">开户地址:</span>
+						  			<span class="flex-1">
+						  				<span v-if="shopInfo.bankProvincesName">
+							  				{{shopInfo.bankProvincesName}}
+							  				{{shopInfo.bankCityName}}
+						  				</span>
+						  				<span v-else>未填写</span>
 						  			</span>
 						  		</p>
 						  		<p class="flex-wrap p-b-10">
@@ -288,8 +318,8 @@
 		  					<div class="add-intell-certify rel">
 						  		<div class="abs add-legal-per font-18 text-center">
 						  			<!-- <p class="color-legal-per">+添加</p>
-									<p class="color-6">餐饮许可证</p> -->
-									<uploadImg :imgParams="{type: 2, bizId: bizId}" v-model="shopInfo.cateringLicence"></uploadImg>
+									<p class="color-6">行业许可证</p> -->
+									<uploadImg :imgParams="{type: 2, bizId: bizId}" v-model="shopInfo.businessLicense"></uploadImg>
 						  		</div>
 						  	</div>
 		  				</el-col>
@@ -298,7 +328,7 @@
 						  		<div class="abs add-legal-per font-18 text-center">
 						  			<!-- <p class="color-legal-per">+添加</p>
 									<p class="color-6">营业执照</p> -->
-									<uploadImg :imgParams="{type: 3, bizId: bizId}" v-model="shopInfo.businessLicense"></uploadImg>
+									<uploadImg :imgParams="{type: 3, bizId: bizId}" v-model="shopInfo.cateringLicence"></uploadImg>
 						  		</div>
 						  	</div>
 						</el-col>
@@ -311,16 +341,15 @@
 						  		</div>
 						  	</div>
 						</el-col>
-						<el-col :span="4" class="p-l-10">
+						<!-- <el-col :span="4" class="p-l-10">
 							<div class="add-intell-certify rel">
 						  		<div class="abs add-legal-per font-18 text-center">
-						  			<!-- <p class="color-legal-per">+添加</p>
-									<p class="color-6">店内景照2</p> -->
+									<p class="color-6">店内景照2</p>
 									<uploadImg :imgParams="{type: 8, bizId: bizId}" v-model="shopInfo.shopInterio2Pic"></uploadImg>
 						  		</div>
 						  	</div>
-						</el-col>
-						<el-col :span="8" class="p-l-10 p-t-10">
+						</el-col> -->
+						<el-col :span="12" class="p-l-10 p-t-10">
 							<div class="p-t-10 font-14 p-l-10">
 								<p class="flex-wrap p-b-10">
 									<span class="d-left">营业执照编号:</span>
@@ -357,6 +386,80 @@
 		  			</el-row>
 		  		</div>
 			</div>
+		</el-row>
+
+		<!-- 经营场景 -->
+		<el-row :gutter="20" class="legal-person p-t-10 m-t-10 height-248">
+			<el-col :span="14" class="bg-white height-100">
+				<div class="grid-content">
+					<div class="base-info-title flex-wrap">
+			  			<h4>经营场景</h4>
+			  			<!-- <el-button class="audit-edit" type="primary" size="mini" @click="showDialog('legalPersonInfo')">编 辑</el-button> -->
+			  		</div>
+			  		<div class="legal-person-con p-t-10 p-b-10">
+			  			<el-row>
+						  <el-col :span="6" class="p-l-10">
+						  	<div class="add-person-img rel">
+						  		<div class="abs add-legal-per font-18 text-center">
+									<uploadImg :imgParams="{type: 8, bizId: bizId}" v-model="shopInfo.shopInterio2Pic"></uploadImg>
+						  		</div>
+						    </div>
+						  </el-col>
+						  <el-col :span="6" class="p-l-10">
+						  	<div class="add-person-img rel">
+						  		<div class="abs add-legal-per font-18 text-center">
+						  			<uploadImg :imgParams="{type: 10, bizId: bizId}" v-model="shopInfo.shopInterio3Pic"></uploadImg>
+						  		</div>
+						    </div>
+						  </el-col>
+						  <el-col :span="6" class="p-l-10">
+						  	<div class="add-person-img rel">
+						  		<div class="abs add-legal-per font-18 text-center">
+						  			<uploadImg :imgParams="{type: 11, bizId: bizId}" v-model="shopInfo.shopInterio4Pic"></uploadImg>
+						  		</div>
+						  	</div>
+						  </el-col>
+						</el-row>
+			  		</div>
+				</div>
+			</el-col>
+			<el-col :span="10" class="height-100">
+				<div class="grid-content bg-white p-l-10 p-r-10 height-100">
+					<div class="base-info-title flex-wrap">
+			  			<h4>支付场景</h4>
+			  			<el-button class="audit-edit" type="primary" size="mini" @click="showDialog('payInfo')">编 辑</el-button>
+			  		</div>
+			  		<div class="account-info p-t-10 p-b-10">
+			  			<el-row>
+						  <el-col :span="14">
+						  	<div class="font-14 color-3 p-t-10">
+						  		<p class="flex-wrap p-b-10 p-t-10">
+						  			<span style="width: 120px;">支付宝授权token:</span>
+						  			<span class="flex-1 break-word">
+						  				<!-- 支付宝授权token -->
+						  				{{ shopInfo.alipayAuthToken || '未填写'}}	
+						  			</span>
+						  		</p>
+						  		<p class="flex-wrap p-b-10">
+						  			<span style="width: 120px;">微信商户号:</span>
+						  			<span class="flex-1">
+						  				<!-- 微信商户号 -->
+						  				{{shopInfo.wxMchId || '未填写'}}		
+						  			</span>
+						  		</p>
+						  		<p class="flex-wrap p-b-10">
+						  			<span style="width: 120px;">微信APPID:</span>
+						  			<span class="flex-1">
+						  				<!-- 微信APPID -->
+						  				{{ shopInfo.wxAppId || '未填写'}}		
+						  			</span>
+						  		</p>
+						  	</div>
+						  </el-col>
+						</el-row>
+			  		</div>
+				</div>
+			</el-col>
 		</el-row>
 
 		<!-- 基本信息编辑 -->
@@ -402,7 +505,7 @@
 			          <!-- <el-input v-model="baseInfoDetail.businessName" auto-complete="off"></el-input> -->
 			        </el-form-item>
 			        <el-form-item label="行业类型" class="m-b-10">
-			        	<el-select v-model="baseInfoDetail.induId" placeholder="商圈选择">
+			        	<el-select @change="induIdChange" v-model="baseInfoDetail.induId" placeholder="商圈选择">
 						  <el-option v-for="item in industryList" 
 						  :label="item.induName" :value="item.induId">
 						  </el-option>
@@ -473,6 +576,12 @@
 		         <el-form-item label="卡号">
 		            <el-input auto-complete="off" v-model="baseInfoDetail.bankCode"></el-input>
 		         </el-form-item>
+		         <el-form-item label="开户省级">
+		            <el-input auto-complete="off" v-model="baseInfoDetail.bankProvincesName"></el-input>
+		         </el-form-item>
+		         <el-form-item label="开户市级">
+		            <el-input auto-complete="off" v-model="baseInfoDetail.bankCityName"></el-input>
+		         </el-form-item>
 		         <el-form-item label="开户支行">
 		            <el-input auto-complete="off" v-model="baseInfoDetail.bankAddress"></el-input>
 		         </el-form-item>
@@ -533,6 +642,60 @@
 			  </span>
 		  </div>
 		</el-dialog>
+
+		<!-- 支付场景编辑 -->
+		<el-dialog
+		  title="支付场景"
+		  :visible.sync="dialogStauts['payInfo']"
+		  width="420px" class="dialog-title">
+		  <div>
+		  	  <el-form ref="form" label-width="110px" :model="baseInfoDetail">
+		  		 <el-form-item label="支付宝token">
+		            <el-input auto-complete="off" v-model="baseInfoDetail.alipayAuthToken"></el-input>
+		         </el-form-item>
+		         <el-form-item label="微信商户号">
+		            <el-input auto-complete="off" v-model="baseInfoDetail.wxMchId"></el-input>
+		         </el-form-item>
+		         <el-form-item label="微信APPID">
+		            <el-input auto-complete="off" v-model="baseInfoDetail.wxAppId"></el-input>
+		         </el-form-item>
+		      </el-form>
+		  </div>
+		  <div class="text-center">
+			  <span slot="footer" class="dialog-footer">
+			    <el-button @click="dialogStauts['payInfo'] = false">取 消</el-button>
+			    <el-button type="primary" @click="editShopInfo('payInfo')">确 定</el-button>
+			  </span>
+		  </div>
+		</el-dialog>
+		<!-- 平台抽成编辑 -->
+		<el-dialog
+		  title="平台抽成编辑"
+		  :visible.sync="dialogStauts['commissionInfo']"
+		  width="420px" class="dialog-title">
+		  <div>
+		  	  <el-form ref="form" label-width="100px" :model="baseInfoDetail">
+		  		 <el-form-item label="手续费用">
+		            <el-input auto-complete="off" v-model="baseInfoDetail.cashRate"></el-input>
+		         </el-form-item>
+		         <el-form-item label="清分费用">
+		            <el-input auto-complete="off" v-model="baseInfoDetail.serviceRate"></el-input>
+		         </el-form-item>
+		         <el-form-item label="支付宝费率">
+		            <el-input auto-complete="off" v-model="baseInfoDetail.alipayRate"></el-input>
+		         </el-form-item>
+		         <el-form-item label="微信费率">
+		            <el-input auto-complete="off" v-model="baseInfoDetail.wxRate"></el-input>
+		         </el-form-item>
+		      </el-form>
+		  </div>
+		  <div class="text-center">
+			  <span slot="footer" class="dialog-footer">
+			    <el-button @click="dialogStauts['commissionInfo'] = false">取 消</el-button>
+			    <el-button type="primary" @click="editShopInfo('commissionInfo')">确 定</el-button>
+			  </span>
+		  </div>
+		</el-dialog>
 		<div style="width: 200px; height: 200px;">
 			
 		</div>
@@ -583,6 +746,7 @@
 	 width: 100%;
 	 padding-top: 78%;
 	 background: #F6F6F6;
+	 max-width: 200px;
   }
   .color-legal-per {
   	color: #409eff;
@@ -619,8 +783,9 @@
 </style>
 <script>
 	import fetch from '../../config/fetch';
-	const uploadImg = r => require.ensure([], () => r(require('@/components/uploadImg')), 'uploadImg');
-	const routerScript = r => require.ensure([], () => r(require('@/components/routerScript')), 'routerScript'); 
+	import uploadImg from '@/components/uploadImg';
+	import routerScript from '@/components/routerScript';
+
 	export default {
 		components: {
 			uploadImg,
@@ -646,7 +811,11 @@
 					//资质证明编辑
 					aptitudeInfo: false,
 					//审核信息
-					auditInfo: false
+					auditInfo: false,
+					//支付宝微信配置
+					payInfo: false,
+					//平台抽成
+					commissionInfo: false
 				},
 
 				//基本信息详情
@@ -671,7 +840,6 @@
 			this.shopAuthenticateId = this.$route.query.shopAuthenticateId;
 			this.loading = true;
 			this.getInfo();
-			console.log('activated');
 		},
 		mounted() {
 			// console.log(AMap)
@@ -687,23 +855,14 @@
 						json.push(item);
 					}
 				}
-				// this.baseInfoDetail['classifyId'] = '';s
-				// for(let section of json) {
-				// 	if(section.induId == this.baseInfoDetail['classifyId']) {
-
-				// 	}
-				// }
-				// console.log('computed');
-				// if(json.length > 0) {
-				// 	this.baseInfoDetail['classifyId'] = json[0].induId;
-				// } else {
-				// 	this.baseInfoDetail['classifyId'] = '';	
-				// }
-
 				return json;
 			}
 		},
 		methods: {
+			//当行业改变的时候,清空classifyId
+			induIdChange() {
+				this.baseInfoDetail.classifyId = '';
+			},
 			//地图加载完成回掉函数
 			mapFinsh() {
 				this.mapLoading = true;
@@ -761,12 +920,30 @@
 					this.baseInfoDetail = {
 						bankName: this.shopInfo['bankName'],
 						bankCode: this.shopInfo['bankCode'],
-						bankAddress: this.shopInfo['bankAddress']
+						bankAddress: this.shopInfo['bankAddress'],
+						bankCityName: this.shopInfo['bankCityName'],
+						bankProvincesName: this.shopInfo['bankProvincesName']
 					};
 				}
 				else if(type == 'aptitudeInfo') {
 
+				} 
+				else if(type == 'payInfo') {
+					this.baseInfoDetail = {
+						alipayAuthToken: this.shopInfo['alipayAuthToken'],
+						wxAppId: this.shopInfo['wxAppId'],
+						wxMchId: this.shopInfo['wxMchId']
+					};
 				}
+				else if(type == 'commissionInfo') {
+					this.baseInfoDetail = {
+						serviceRate: this.shopInfo['serviceRate'],
+						cashRate: this.shopInfo['cashRate'],
+						alipayRate: this.shopInfo['alipayRate'],
+						wxRate: this.shopInfo['wxRate']
+					};
+				}
+
 				this.dialogStauts[type] = true;
 			},
 			//关闭弹层
@@ -818,6 +995,14 @@
 				// 资质证明编辑
 				else if(type == 'aptitudeInfo') {
 
+				}
+				//平台抽成
+				else if(type == 'commissionInfo') {
+					this.baseInfoDetail['type'] = 4;
+				}
+				// 修改支付宝微信配置
+				else if(type == 'payInfo') {
+					this.baseInfoDetail['type'] = 5;
 				}
 				this.commitShopInfo(this.baseInfoDetail);
 				
