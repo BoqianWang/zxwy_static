@@ -25,6 +25,8 @@ const order = r => require.ensure([],()=>r(require('../page/order/orderhome')),'
 const hangye = r => require.ensure([],()=>r(require('../page/setting/hangye')),'hangye');
 const subhangye = r => require.ensure([],()=>r(require('../page/setting/subhangye')),'subhangye');
 const hangye_biz = r => require.ensure([],()=>r(require('../page/setting/hangye_biz')),'hangye_biz');
+//商家二维码
+const shopCode = r => require.ensure([],()=>r(require('../page/setting/shopCode')),'hangye_biz');
 const bizcertifi = r => require.ensure([],()=>r(require('../page/bizmanage/bizcertification')),'bizcertifi');
 const biztixian = r => require.ensure([],()=>r(require('../page/bizcaiwu/biztixianlist')),'biztixian');
 const shangquan = r => require.ensure([],()=>r(require('../page/setting/shangquan')),'shangquan');
@@ -44,6 +46,8 @@ const bizlist = r => require.ensure([],()=>r(require('../page/bizmanage/bizList.
 const bizdetail = r => require.ensure([],()=>r(require('../page/bizmanage/bizDetail.vue')),'bizdetail');
 //店铺详情审核
 const shopAudit = r => require.ensure([],()=>r(require('../page/bizmanage/shopAudit.vue')),'shopAudit');
+//业务员页面
+const salesMan = r => require.ensure([],()=>r(require('../page/salesman/salesMan.vue')),'salesMan');
 
 //店铺
 export default{
@@ -63,78 +67,92 @@ export default{
       path:'',
       component:home
     },{
-      path:'/order',
+      path:'order',
       component:order
     },
     {
-      path:'/hangye',
+      path:'hangye',
       component:hangye
     },
     {
-      path:'/subhangye',
+      path:'subhangye',
       component:subhangye
     },
     {
-      path:'/hangye_biz',
+      path:'hangye_biz',
       component:hangye_biz
     },
     {
-      path:'/bizcertifi',
+      path:'bizcertifi',
       component:bizcertifi
     },
     {
-      path:'/biztixian',
+      path:'biztixian',
       component:biztixian
     },
     {
-      path:'/shangquan',
+      path:'shangquan',
       component:shangquan
     },{
-      path:'/appupdate',
+      path:'appupdate',
       component:appupdate
     },{
-      path:'/sqfenxi',
+      path:'sqfenxi',
       component:sqfenxi
     },{
-      path:'/sqdetail',
+      path:'sqdetail',
       component:sqdetail
     },{
-      path:'/bizoneday',
+      path:'bizoneday',
       component:bizoneday
     },{
-      path:'/sqbiztime',
+      path:'sqbiztime',
       component:sqbiztime
     },{
-      path:'/bizchangetime',
+      path:'bizchangetime',
       component:bizchangetime
     },{
-      path:'/ptfenxi',
+      path:'ptfenxi',
       component:ptfenxi
     },{
-      path:'/sqintegral',
+      path:'sqintegral',
       component:sqintegral
     },{
-      path:'/bizintegral',
+      path:'bizintegral',
       component:bizintegral
     },{
-      path:'/aclist',
+      path:'aclist',
       component:aclist
     },{
-      path:'/addfullgift',
+      path:'addfullgift',
       component:addfullgift
     },{
-      path:'/orderfenxi',
+      path:'orderfenxi',
       component:orderfenxi
     },{
-      path:'/bizlist',
+      path:'bizlist',
       component:bizlist
     },{
-      path:'/bizdetail',
+      path:'bizdetail',
       component:bizdetail
     },
     {
-      path: '/shopAudit',
+      path: 'shopAudit',
       component: shopAudit
+    },
+    {
+      path: 'shopCode',
+      component: shopCode,
+      meta: {
+        title: '商家二维码'
+      }
+    },
+    {
+      path: 'salesMan',
+      component: salesMan,
+      meta: {
+        title: '业务员管理'
+      }
     }
 
 

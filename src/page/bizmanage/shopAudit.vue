@@ -1,5 +1,5 @@
 <template>
-	<div  v-loading="loading"
+	<div v-loading="loading"
     element-loading-text="拼命加载中"
     element-loading-spinner="el-icon-loading"
     element-loading-background="rgba(0, 0, 0, 0.8)">
@@ -29,7 +29,7 @@
 				  					<span class="flex-1">{{shopInfo.shopName || '未填写'}}<!-- 三只小猪 --></span>
 				  				</p>
 				  				<p class="flex-wrap p-b-10">
-				  					<span class="d-left">店铺账号:</span>
+				  					<span class="d-left">二维码编号:</span>
 				  					<span class="flex-1 break-word"><!-- 156544851135232 -->{{shopInfo.merchantNo || '未填写'}}</span>
 				  				</p>
 				  				<p class="flex-wrap p-b-10">
@@ -145,25 +145,38 @@
 		  	<div class="grid-content">
 		  		<div class="base-info-title flex-wrap">
 		  			<h4>平台抽点</h4>
+		  			<el-button type="text" size="medium" style="color: #FF4715;">{{marketTypeStatus[shopInfo.marketType]}}</el-button>
 		  		</div>
 		  		<div class="commission-block p-t-10 height-140">
 		  			<div class="flex-wrap text-center">
 		  				<p class="flex-1">
-		  					<span class="font-24">{{shopInfo.cashRate}}%</span><br>
+		  					<span class="font-24">
+		  						{{(shopInfo.cashRate * 100).toFixed(2)}}
+		  						<span>%</span>
+		  					</span><br>
 		  					<span class="font-12 color-7">手续费</span>	
 		  				</p>
 		  				<p class="flex-1">
-		  					<span class="font-24">{{shopInfo.serviceRate}}%</span><br>
+		  					<span class="font-24">
+		  					  {{shopInfo.marketType == 1 ? (shopInfo.serviceRate * 100).toFixed(2) : shopInfo.serviceRate}}
+		  					  <span v-show="shopInfo.marketType == 1">%</span>
+		  				    </span><br>
 		  					<span class="font-12 color-7">清分费用</span>
 		  				</p>
 		  			</div>
 		  			<div class="flex-wrap text-center p-t-10">
 		  				<p class="flex-1">
-		  					<span class="font-24">{{shopInfo.alipayRate}}%</span><br>
+		  					<span class="font-24">
+		  					{{(shopInfo.alipayRate * 100).toFixed(2)}}
+		  					<span>%</span>
+		  					</span><br>
 		  					<span class="font-12 color-7">支付宝费率</span>	
 		  				</p>
 		  				<p class="flex-1">
-		  					<span class="font-24">{{shopInfo.wxRate}}%</span><br>
+		  					<span class="font-24">
+		  					  {{(shopInfo.wxRate * 100).toFixed(2)}}
+		  					  <span>%</span>
+		  					</span><br>
 		  					<span class="font-12 color-7">微信费率</span>
 		  				</p>
 		  			</div>
@@ -389,7 +402,7 @@
 		</el-row>
 
 		<!-- 经营场景 -->
-		<el-row :gutter="20" class="legal-person p-t-10 m-t-10 height-248">
+		<el-row :gutter="20" class="legal-person p-t-10 m-t-10" style="height: 312px;">
 			<el-col :span="14" class="bg-white height-100">
 				<div class="grid-content">
 					<div class="base-info-title flex-wrap">
@@ -398,21 +411,21 @@
 			  		</div>
 			  		<div class="legal-person-con p-t-10 p-b-10">
 			  			<el-row>
-						  <el-col :span="6" class="p-l-10">
+						  <el-col :span="7" class="p-l-10">
 						  	<div class="add-person-img rel">
 						  		<div class="abs add-legal-per font-18 text-center">
 									<uploadImg :imgParams="{type: 8, bizId: bizId}" v-model="shopInfo.shopInterio2Pic"></uploadImg>
 						  		</div>
 						    </div>
 						  </el-col>
-						  <el-col :span="6" class="p-l-10">
+						  <el-col :span="7" class="p-l-10">
 						  	<div class="add-person-img rel">
 						  		<div class="abs add-legal-per font-18 text-center">
 						  			<uploadImg :imgParams="{type: 10, bizId: bizId}" v-model="shopInfo.shopInterio3Pic"></uploadImg>
 						  		</div>
 						    </div>
 						  </el-col>
-						  <el-col :span="6" class="p-l-10">
+						  <el-col :span="7" class="p-l-10">
 						  	<div class="add-person-img rel">
 						  		<div class="abs add-legal-per font-18 text-center">
 						  			<uploadImg :imgParams="{type: 11, bizId: bizId}" v-model="shopInfo.shopInterio4Pic"></uploadImg>
@@ -431,13 +444,34 @@
 			  		</div>
 			  		<div class="account-info p-t-10 p-b-10">
 			  			<el-row>
-						  <el-col :span="14">
+						  <el-col>
 						  	<div class="font-14 color-3 p-t-10">
 						  		<p class="flex-wrap p-b-10 p-t-10">
 						  			<span style="width: 120px;">支付宝授权token:</span>
 						  			<span class="flex-1 break-word">
 						  				<!-- 支付宝授权token -->
 						  				{{ shopInfo.alipayAuthToken || '未填写'}}	
+						  			</span>
+						  		</p>
+						  		<p class="flex-wrap p-b-10 p-t-10">
+						  			<span style="width: 120px;">支付宝PID:</span>
+						  			<span class="flex-1 break-word">
+						  				<!-- 支付宝授权token -->
+						  				{{ shopInfo.aliPid || '未填写'}}	
+						  			</span>
+						  		</p>
+						  		<p class="flex-wrap p-b-10 p-t-10">
+						  			<span style="width: 120px;">支付宝AppID:</span>
+						  			<span class="flex-1 break-word">
+						  				<!-- 支付宝授权token -->
+						  				{{ shopInfo.aliAuthAppId || '不必填写'}}	
+						  			</span>
+						  		</p>
+						  		<p class="flex-wrap p-b-10 p-t-10">
+						  			<span style="width: 120px;">支付宝刷新令牌:</span>
+						  			<span class="flex-1 break-word">
+						  				<!-- 支付宝授权token -->
+						  				{{ shopInfo.alipayAppRefreshToken || '不必填写'}}	
 						  			</span>
 						  		</p>
 						  		<p class="flex-wrap p-b-10">
@@ -451,7 +485,7 @@
 						  			<span style="width: 120px;">微信APPID:</span>
 						  			<span class="flex-1">
 						  				<!-- 微信APPID -->
-						  				{{ shopInfo.wxAppId || '未填写'}}		
+						  				{{ shopInfo.wxAppId || '不必填写'}}		
 						  			</span>
 						  		</p>
 						  	</div>
@@ -471,13 +505,13 @@
 		  	<el-row>
 			  <el-col :span="10">
 			  	<div class="grid-conten">
-			  	  <el-form ref="form" label-width="80px" :model="baseInfoDetail">
+			  	  <el-form ref="form" label-width="90px" :model="baseInfoDetail">
 			  		<el-form-item label="店铺简称" class="m-b-10">
 			          <el-input v-model="baseInfoDetail.shopName" auto-complete="off"></el-input>
 			        </el-form-item>
-			        <!-- <el-form-item label="店铺账号" class="m-b-10">
+			        <el-form-item label="二维码编号" class="m-b-10">
 			          <el-input v-model="baseInfoDetail.merchantNo" auto-complete="off"></el-input>
-			        </el-form-item> -->
+			        </el-form-item>
 			        <el-form-item label="店铺全称" class="m-b-10">
 			          <el-input v-model="baseInfoDetail.merFullName" auto-complete="off"></el-input>
 			        </el-form-item>
@@ -653,12 +687,21 @@
 		  		 <el-form-item label="支付宝token">
 		            <el-input auto-complete="off" v-model="baseInfoDetail.alipayAuthToken"></el-input>
 		         </el-form-item>
+		         <el-form-item label="支付宝PID">
+		            <el-input auto-complete="off" v-model="baseInfoDetail.aliPid"></el-input>
+		         </el-form-item>
+		         <!-- <el-form-item label="支付宝AppID">
+		            <el-input auto-complete="off" v-model="baseInfoDetail.aliAuthAppId"></el-input>
+		         </el-form-item> -->
+		         <!-- <el-form-item label="支付宝刷新令牌">
+		            <el-input auto-complete="off" v-model="baseInfoDetail.alipayAppRefreshToken"></el-input>
+		         </el-form-item> -->
 		         <el-form-item label="微信商户号">
 		            <el-input auto-complete="off" v-model="baseInfoDetail.wxMchId"></el-input>
 		         </el-form-item>
-		         <el-form-item label="微信APPID">
+		         <!-- <el-form-item label="微信APPID">
 		            <el-input auto-complete="off" v-model="baseInfoDetail.wxAppId"></el-input>
-		         </el-form-item>
+		         </el-form-item> -->
 		      </el-form>
 		  </div>
 		  <div class="text-center">
@@ -687,6 +730,9 @@
 		         <el-form-item label="微信费率">
 		            <el-input auto-complete="off" v-model="baseInfoDetail.wxRate"></el-input>
 		         </el-form-item>
+		         <el-form-item label="营销费率类型">
+		            <el-input placeholder="0为固定值,1为百分比" auto-complete="off" v-model="baseInfoDetail.marketType"></el-input>
+		         </el-form-item>
 		      </el-form>
 		  </div>
 		  <div class="text-center">
@@ -696,9 +742,6 @@
 			  </span>
 		  </div>
 		</el-dialog>
-		<div style="width: 200px; height: 200px;">
-			
-		</div>
 	</div>
 </template>
 <style lang="scss">
@@ -736,7 +779,7 @@
 	 padding: 20px 0;
   }
   .d-left {
-		width: 74px;
+		width: 76px;
   }
   .audit-block > p > span:first-child {
 	 width: 74px;
@@ -801,6 +844,10 @@
 					"1": "审核",
 					"2": '审核未通过'
 				},
+				marketTypeStatus: {
+					"0": '固定值',
+					"1": '百分比'
+				},
 				dialogStauts: {
 					//基本信息弹框
 					baseInfo: false,
@@ -836,6 +883,7 @@
 			}
 		},
 		activated() {
+			this.shopInfo = {};
 			this.bizId = this.$route.query.bizId;
 			this.shopAuthenticateId = this.$route.query.shopAuthenticateId;
 			this.loading = true;
@@ -883,6 +931,7 @@
 					this.baseInfoDetail = {
 						shopName: this.shopInfo['shopName'],
 						merFullName: this.shopInfo['merFullName'],
+						merchantNo: this.shopInfo['merchantNo'],
 						shopStreet: this.shopInfo['shopStreet'],
 						tel: this.shopInfo['tel'],
 						merEmail: this.shopInfo['merEmail'],
@@ -925,22 +974,28 @@
 						bankProvincesName: this.shopInfo['bankProvincesName']
 					};
 				}
+				//资质证明
 				else if(type == 'aptitudeInfo') {
 
 				} 
 				else if(type == 'payInfo') {
 					this.baseInfoDetail = {
 						alipayAuthToken: this.shopInfo['alipayAuthToken'],
-						wxAppId: this.shopInfo['wxAppId'],
+						aliPid: this.shopInfo['aliPid'],
+						// aliAuthAppId: this.shopInfo['aliAuthAppId'],
+						// alipayAppRefreshToken: this.shopInfo['alipayAppRefreshToken'],
+						// wxAppId: this.shopInfo['wxAppId'],
 						wxMchId: this.shopInfo['wxMchId']
 					};
 				}
 				else if(type == 'commissionInfo') {
+					let serviceRate = this.shopInfo['marketType'] == 1 ? Tools.ToCurrency(this.shopInfo['serviceRate'] * 100) : this.shopInfo['serviceRate'];
 					this.baseInfoDetail = {
-						serviceRate: this.shopInfo['serviceRate'],
-						cashRate: this.shopInfo['cashRate'],
-						alipayRate: this.shopInfo['alipayRate'],
-						wxRate: this.shopInfo['wxRate']
+						serviceRate: serviceRate,
+						cashRate: Tools.ToCurrency(this.shopInfo['cashRate'] * 100),
+						alipayRate: Tools.ToCurrency(this.shopInfo['alipayRate'] * 100),
+						wxRate: Tools.ToCurrency(this.shopInfo['wxRate'] * 100),
+						marketType: this.shopInfo['marketType']
 					};
 				}
 
@@ -999,7 +1054,13 @@
 				//平台抽成
 				else if(type == 'commissionInfo') {
 					this.baseInfoDetail['type'] = 4;
-				}
+					// if(this.shopInfo['marketType'] == 1)
+					this.baseInfoDetail['serviceRate'] = this.baseInfoDetail['marketType'] == 1 ? this.baseInfoDetail['serviceRate'] / 100 : this.baseInfoDetail['serviceRate'];
+					
+					this.baseInfoDetail['cashRate'] /= 100;
+					this.baseInfoDetail['alipayRate'] /= 100;
+					this.baseInfoDetail['wxRate'] /= 100;
+				} 
 				// 修改支付宝微信配置
 				else if(type == 'payInfo') {
 					this.baseInfoDetail['type'] = 5;
@@ -1146,6 +1207,9 @@
 					shopAuthenticateId: this.shopAuthenticateId
 				}).then(res => {
 					this.shopInfo = res.data;
+					// this.shopInfo['alipayRate'] = Tools.ToCurrency(this.shopInfo['alipayRate'] * 100);
+					// this.shopInfo['cashRate'] = Tools.ToCurrency(this.shopInfo['cashRate'] * 100);
+					// this.shopInfo['wxRate'] = Tools.ToCurrency(this.shopInfo['wxRate'] * 100);
 					this.loading = false;
 				}).catch(res => {
 					console.log(res);

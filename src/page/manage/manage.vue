@@ -12,42 +12,47 @@
        text-color="#999"
        active-text-color="#fff"
        router>
-       <el-menu-item index="manage">
+       <el-menu-item index="/manage">
          <i class="iconfont icon-home"></i>
          <span slot="title">首页</span>
        </el-menu-item>
-       <el-menu-item index="order">
+       <el-menu-item index="/manage/order">
          <i class="iconfont icon-dingdan"></i>
          <span slot="title">订单管理</span>
        </el-menu-item>
-       <el-menu-item index="bizlist">
+       <el-menu-item index="/manage/bizlist">
          <i class="iconfont icon-dingdan"></i>
          <span slot="title">商家管理</span>
        </el-menu-item>
-       <el-menu-item index="aclist">
+       <el-menu-item index="/manage/aclist">
          <i class="iconfont icon-dingdan"></i>
          <span slot="title">活动管理</span>
        </el-menu-item>
+       <el-menu-item index="/manage/salesMan">
+         <i class="iconfont icon-dingdan"></i>
+         <span slot="title">业务员管理</span>
+       </el-menu-item>
        <el-submenu index="3">
          <template slot="title"><i class="iconfont icon-sitting"></i><span slot="title">设置</span></template>
-         <el-menu-item index="hangye">行业列表</el-menu-item>
-         <el-menu-item index="hangye_biz">商家抽点列表</el-menu-item>
-         <el-menu-item index="shangquan">商圈列表</el-menu-item>
-         <el-menu-item index="appupdate">app版本</el-menu-item>
+         <el-menu-item index="/manage/hangye">行业列表</el-menu-item>
+         <el-menu-item index="/manage/hangye_biz">商家抽点列表</el-menu-item>
+         <el-menu-item index="/manage/shangquan">商圈列表</el-menu-item>
+         <el-menu-item index="/manage/appupdate">app版本</el-menu-item>
+         <el-menu-item index="/manage/shopCode">商家二维码</el-menu-item>
        </el-submenu>
        <el-submenu index="4">
          <template slot="title"><i class="iconfont icon-sitting"></i><span slot="title">审核管理</span></template>
-         <el-menu-item index="biztixian">
+         <el-menu-item index="/manage/biztixian">
            提现审核
            <!-- <el-badge class="mark" :value="12" /> -->
           </el-menu-item>
-         <el-menu-item index="bizcertifi">店铺审核</el-menu-item>
+         <el-menu-item index="/manage/bizcertifi">店铺审核</el-menu-item>
        </el-submenu>
        <el-submenu index="5">
          <template slot="title"><i class="iconfont icon-sitting"></i><span slot="title">数据分析</span></template>
-         <el-menu-item index="sqfenxi">交易数据分析</el-menu-item>
-         <el-menu-item index="ptfenxi">积分数据分析</el-menu-item>
-         <el-menu-item index="orderfenxi">订单数据分析</el-menu-item>
+         <el-menu-item index="/manage/sqfenxi">交易数据分析</el-menu-item>
+         <el-menu-item index="/manage/ptfenxi">积分数据分析</el-menu-item>
+         <el-menu-item index="/manage/orderfenxi">订单数据分析</el-menu-item>
        </el-submenu>
      </el-menu>
    </div>

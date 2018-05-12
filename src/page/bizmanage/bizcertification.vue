@@ -34,12 +34,21 @@
       </div>
       <el-table ref="multipleTable" v-loading="loading" :data="cerlists" tooltip-effect="dark" style="width: 100%" header-row-class-name="headerClass" max-height="600" border>
           <el-table-column type="selection" width="55"></el-table-column>
-          <el-table-column prop="bizUserName" label="账号"></el-table-column>
+          <el-table-column prop="username" label="电话号码"></el-table-column>
           <el-table-column prop="shopName" label="店铺名称"></el-table-column>
           <el-table-column prop="legalPerson" label="法人"></el-table-column>
           <el-table-column prop="shopStreet" label="店铺地址"></el-table-column>
-          <el-table-column prop="applyTime" label="申请时间"></el-table-column>
-          <el-table-column prop="checkStatus" label="审核状态"></el-table-column>
+          <el-table-column label="申请时间">
+             <template slot-scope="scope">
+              {{ scope.row.applyTime | timeformat('yyyy-M-d hh:mm:ss') }}
+            </template>
+          </el-table-column>
+          </el-table-column>
+          <el-table-column prop="checkStatus" label="审核状态">
+             <template slot-scope="scope">
+                 {{ aduitStatus[scope.row.checkStatus] }}
+             </template>
+          </el-table-column>
           <el-table-column prop="address" label="操作">
             <template slot-scope="scope">
                 <el-button size="mini" @click="czClick(scope.row)">操作</el-button>
@@ -138,17 +147,7 @@ export default {
       yesAuditNumber:0,
       // radio5:'待审核',
       loading: true,
-      cerlists:[
-        {
-          bizUserName: '1471047476',
-          shopName: '王者店铺',
-          legalPerson: '王贞浩',
-          shopStreet: '广东深圳',
-          applyTime: '2018-4-18',
-          checkStatus: '正在审核',
-          address: 'nothing'
-        }
-      ],
+      cerlists:[],
       pageNo:1,
       pageSize:20,
       status:0,
@@ -160,21 +159,25 @@ export default {
       totalPage:20,
       times:'',
       shopName:'',
-      cerStatus:'3'
+      cerStatus:'3',
+      aduitStatus: {
+         "0": '未审核',
+         "1": '已审核'
+      }
     }
   },
   activated() {
-
+    this.apirequest();
     
   },
   mounted(){
-    this.apirequest();
+    // this.apirequest();
   },
   methods:{
     //查看店铺详情
     checkDetail: function(info) {
       this.$router.push({
-        path: '/shopAudit',
+        path: '/manage/shopAudit',
         query: {
           bizId: info.bizId,
           shopAuthenticateId: info.shopAuthenticateId
@@ -183,6 +186,7 @@ export default {
       console.log(info)
     },
     apirequest:function(){
+      this.loading = true;
       var startTime = '';
       var endTime  = '';
       console.log(this.times);

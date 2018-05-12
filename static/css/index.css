@@ -115,6 +115,8 @@
 }
 .hy_body .el-table_1_column_2,.hy_body .el-table_1_column_2 .cell,.hy_body .el-table_1_column_3,.hy_body .el-table_1_column_3 .cell,.hy_body .el-table_1_column_4,.hy_body .el-table_1_column_4 .cell,.hy_body .el-table_1_column_5,.hy_body .el-table_1_column_5 .cell,.hy_body .el-table_1_column_6,.hy_body .el-table_1_column_6 .cell{padding:0
 }
+.download-img{display:inline-block
+}
 .bizcer_body{background-color:#fff;margin-top:20px
 }
 .bizcer_body .bizcer_listTitle{padding:20px;display:-ms-flexbox;display:flex;-ms-flex-pack:justify;justify-content:space-between
@@ -281,7 +283,9 @@
 }
 .grid-content .base-info-content{padding:20px 0
 }
-.audit-block>p>span:first-child,.d-left{width:74px
+.d-left{width:76px
+}
+.audit-block>p>span:first-child{width:74px
 }
 .add-intell-certify,.legal-person .add-person-img{width:100%;padding-top:78%;background:#f6f6f6;max-width:200px
 }

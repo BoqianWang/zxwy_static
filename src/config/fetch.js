@@ -1,11 +1,12 @@
 import axios from 'axios'
 import qs from 'qs'
-import { Message } from 'element-ui';
+import { Message, Loading } from 'element-ui';
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import routerConfig from '../router/router';
-var router = new VueRouter(routerConfig);
 Vue.use(VueRouter);
+var router = new VueRouter(routerConfig);
+
 // axios 配置
 axios.defaults.timeout = 1000000;    //响应时间
 // axios.defaults.withCredentials=true;
@@ -14,9 +15,9 @@ axios.defaults.timeout = 1000000;    //响应时间
 
 // axios.defaults.baseURL = 'http://192.169.18.77:8081/zxwy-operator'; 
 //本地配置接口地址
-// axios.defaults.baseURL = 'http://192.169.18.88:9001/zxwy-operator';
+axios.defaults.baseURL = 'http://192.169.18.88:9001/zxwy-operator';
 
-axios.defaults.baseURL = 'http://test.zhongxiang51.com/zxwy-operator'; 
+// axios.defaults.baseURL = 'http://test.zhongxiang51.com/zxwy-operator'; 
 //测试配置接口地址
 // axios.defaults.baseURL = 'http://operator.zhongxiang51.com'; //正式配置接口地址
 //添加请求拦截器
@@ -72,9 +73,11 @@ export default {
                     }else {
                       Message.error(response.data.msg);
                       if(response.data.code==999){
-                        router.replace({
-                          path: '/'
-                        })
+                        // router.replace({
+                        //   path: '/'
+                        // })
+                        localStorage.token = ''
+                        location.reload();
                       }else{
                         reject(response.data.code);
                       }
@@ -91,11 +94,11 @@ export default {
 
     //GET 请求方式
     fetchGet: function(url, params) {
-      console.log(params);
-      if(sessionStorage.token){
-        params.token = sessionStorage.token;
-      }
-      console.log(params);
+      // console.log(params);
+      // if(sessionStorage.token){
+      //   params.token = sessionStorage.token;
+      // }
+      // console.log(params);
         return new Promise((resolve, reject) => {
             axios.get(url, {
                     params: params
