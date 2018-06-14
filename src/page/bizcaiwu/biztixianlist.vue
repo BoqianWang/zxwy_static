@@ -29,8 +29,13 @@
         type="selection"
         width="55">
       </el-table-column>
-      <el-table-column
+      <!-- <el-table-column
         type="index">
+      </el-table-column> -->
+      <el-table-column
+        prop="index"
+        label="序号"
+         width="55">
       </el-table-column>
       <el-table-column
         prop="shopName"
@@ -118,6 +123,7 @@
 
 <script>
 import api from '../../config/api';
+// import fetch from '@/config/fetch.js';
 export default {
   data(){
     return{
@@ -125,11 +131,12 @@ export default {
       loading: true,
       tixianlists:[],
       pageNo:1,
-      pageSize:20,
+      pageSize: 20,
       status:0,
       dialogVisible: false,
       select_biztixian:'',
-      totalPage:20
+      totalPage:20,
+      pageCount: 0
     }
   },
   activated(){
@@ -140,17 +147,30 @@ export default {
       window.location.href = "http://operator.zhongxiang51.com/bizWithDrawal/downloadExportWithdrawalExcel";
     },
     apirequest:function(){
+    // fetch.fetchPost('/bizWithDrawal/list', {
+    //     pageNo: this.pageNo,
+    //     auditStatus: this.status
+    // })
     api.biztixianlist(this.pageNo,this.status)
     .then(res=>{
-
-      this.tixianlists = res.data.lists;
+      let result = res.data;
+      this.pageCount = (result.pageNo - 1) * result.pageSize;
+      this.totalPage = result.totalPage * result.pageSize;
+      this.getTixianLists(result.lists);
       this.loading = false;
-      this.totalPage = res.data.totalPage*this.pageSize;
 
     })
     .catch(error=>{
       this.loading = false;
     })
+    },
+    //处理列表
+    getTixianLists(list) {
+        this.tixianlists = [];
+        for(let item of list) {
+            item['index'] = ++this.pageCount;
+            this.tixianlists.push(item);
+        }
     },
     changeListClick:function(status){
       this.status = status;

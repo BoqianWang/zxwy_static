@@ -78,13 +78,13 @@
 				// 是否正在上传
 				isUpload: false,
 				imageInfo: false,
-				imageUrl: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1524629017039&di=f4953414b1f45510e76b52ce65e0aec9&imgtype=0&src=http%3A%2F%2Fwww.pptok.com%2Fd%2Ffile%2Fp%2F20151229%2F5c9a3491df3102de0dcaa36b37b5157d.jpg'
+				imageDefaltUrl: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1524629017039&di=f4953414b1f45510e76b52ce65e0aec9&imgtype=0&src=http%3A%2F%2Fwww.pptok.com%2Fd%2Ffile%2Fp%2F20151229%2F5c9a3491df3102de0dcaa36b37b5157d.jpg',
 			}
 		},
 		computed: {
 			//监听路径是否已经改变
 			imgSrc() {
-				return this.imageUrl = this.value ? this.value : this.imageUrl;
+				return this.value ? this.value : this.imageDefaltUrl;
 			}
 		},
 		mounted() {
@@ -123,7 +123,7 @@
 					this.hideProgress();
 				} else {
 					this.$message({
-			          message: '图片上传失败',
+			          message: res.msg,
 			          type: 'error'
 			        });
 				}

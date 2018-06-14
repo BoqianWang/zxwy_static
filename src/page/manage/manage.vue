@@ -54,14 +54,17 @@
          <el-menu-item index="/manage/ptfenxi">积分数据分析</el-menu-item>
          <el-menu-item index="/manage/orderfenxi">订单数据分析</el-menu-item>
        </el-submenu>
+
+       <el-submenu index="6">
+         <template slot="title"><i class="iconfont icon-sitting"></i><span slot="title">达达</span></template>
+         <el-menu-item index="/manage/accountList">账号列表</el-menu-item>
+       </el-submenu>
+
      </el-menu>
    </div>
     <el-container>
-      <el-header>
-        <!-- <el-radio-group v-model="isCollapse" style="margin-bottom: 20px;">
-          <el-radio-button :label="false">展开</el-radio-button>
-          <el-radio-button :label="true">收起</el-radio-button>
-        </el-radio-group> -->
+      <el-header class="flex-wrap align-center" style="justify-content: flex-end;">
+          <el-button style="height: 42px;" type="danger" @click="logout">退出登录</el-button>
       </el-header>
       <el-main>
         <keep-alive>
@@ -82,6 +85,14 @@ export default {
       };
     },
   methods: {
+     // 退出登录
+     logout() {
+        localStorage.token = '';
+        location.reload();
+        // this.$route.path({
+        //   path: '/login'
+        // })
+     },
      handleOpen(key, keyPath) {
        console.log(key, keyPath);
      },

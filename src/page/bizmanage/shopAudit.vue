@@ -69,7 +69,7 @@
 				  					</span>
 				  				</p>
 				  				<p class="flex-wrap p-b-10">
-				  					<span class="d-left">商&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;圈:</span>
+				  					<span class="d-left">商&nbsp;&nbsp;圈:</span>
 				  					<span class="flex-1">
 				  						{{shopInfo.businessName || '未填写'}}<!-- 笋岗商圈 -->
 				  							
@@ -882,8 +882,12 @@
 				mapLoading: true,
 			}
 		},
-		activated() {
+		//keep-alive组件停用时调用。
+		deactivated() {
 			this.shopInfo = {};
+		},
+		//keep-alive组件激活时调用。
+		activated() {
 			this.bizId = this.$route.query.bizId;
 			this.shopAuthenticateId = this.$route.query.shopAuthenticateId;
 			this.loading = true;

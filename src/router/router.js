@@ -48,6 +48,8 @@ const bizdetail = r => require.ensure([],()=>r(require('../page/bizmanage/bizDet
 const shopAudit = r => require.ensure([],()=>r(require('../page/bizmanage/shopAudit.vue')),'shopAudit');
 //业务员页面
 const salesMan = r => require.ensure([],()=>r(require('../page/salesman/salesMan.vue')),'salesMan');
+//达达账号
+const accountList = r => require.ensure([],()=>r(require('../page/dada/accountList.vue')),'accountList');
 
 //店铺
 export default{
@@ -152,6 +154,13 @@ export default{
       component: salesMan,
       meta: {
         title: '业务员管理'
+      }
+    },
+    {
+      path: 'accountList',
+      component: accountList, 
+      meta: {
+        title: '达达账号列表'
       }
     }
 
