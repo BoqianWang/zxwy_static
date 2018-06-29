@@ -50,7 +50,9 @@ const shopAudit = r => require.ensure([],()=>r(require('../page/bizmanage/shopAu
 const salesMan = r => require.ensure([],()=>r(require('../page/salesman/salesMan.vue')),'salesMan');
 //达达账号
 const accountList = r => require.ensure([],()=>r(require('../page/dada/accountList.vue')),'accountList');
-
+//
+const takeoutOrder = r => require.ensure([],()=>r(require('../page/order/takeoutOrder.vue')),'takeoutOrder');
+const takeoutOrderDetail = r => require.ensure([],()=>r(require('../page/order/takeoutOrderDetail.vue')),'takeoutOrderDetail');
 //店铺
 export default{
   routes:[
@@ -161,6 +163,20 @@ export default{
       component: accountList, 
       meta: {
         title: '达达账号列表'
+      }
+    },
+    {
+      path: 'takeoutOrder',
+      component: takeoutOrder, 
+      meta: {
+        title: '外卖订单监控'
+      }
+    }, 
+    {
+      path: 'takeoutOrderDetail',
+      component: takeoutOrderDetail,
+      meta: {
+        title: '外卖店铺详情'
       }
     }
 

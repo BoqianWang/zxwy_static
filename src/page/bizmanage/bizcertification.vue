@@ -183,7 +183,6 @@ export default {
           shopAuthenticateId: info.shopAuthenticateId
         }
       })
-      console.log(info)
     },
     apirequest:function(){
       this.loading = true;
