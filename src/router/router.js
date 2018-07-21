@@ -53,6 +53,8 @@ const accountList = r => require.ensure([],()=>r(require('../page/dada/accountLi
 //
 const takeoutOrder = r => require.ensure([],()=>r(require('../page/order/takeoutOrder.vue')),'takeoutOrder');
 const takeoutOrderDetail = r => require.ensure([],()=>r(require('../page/order/takeoutOrderDetail.vue')),'takeoutOrderDetail');
+
+const dadaTips = r => require.ensure([],()=>r(require('../page/dada/dadaTips.vue')),'dadaTips');
 //店铺
 export default{
   routes:[
@@ -177,6 +179,13 @@ export default{
       component: takeoutOrderDetail,
       meta: {
         title: '外卖店铺详情'
+      }
+    },
+    {
+      path: 'dadaTips',
+      component: dadaTips,
+      meta: {
+        title: '达达小费设置'
       }
     }
 

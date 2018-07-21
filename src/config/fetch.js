@@ -14,9 +14,9 @@ axios.defaults.timeout = 1000000;    //响应时间
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
 
 //本地配置接口地址
-axios.defaults.baseURL = 'http://192.169.18.88:9001/zxwy-operator';
+// axios.defaults.baseURL = 'http://192.169.18.88:9001/zxwy-operator';
 // axios.defaults.baseURL = 'http://192.169.18.77:8082/zxwy-operator'; 
-// axios.defaults.baseURL = 'http://test.zhongxiang51.com/zxwy-operator'; 
+axios.defaults.baseURL = 'http://test.zhongxiang51.com/zxwy-operator'; 
 //测试配置接口地址
 // axios.defaults.baseURL = 'http://operator.zhongxiang51.com'; //正式配置接口地址
 //添加请求拦截器

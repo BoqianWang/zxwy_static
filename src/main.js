@@ -21,7 +21,6 @@ Vue.use(ElementUI);
 
 //判断用户是否已经登录
 router.beforeEach((to, from, next) => {
-	console.log(to);
 	if(to.fullPath == '/') {
 		if(localStorage.token) {
 			next('/manage');

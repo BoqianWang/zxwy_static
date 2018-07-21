@@ -61,8 +61,12 @@
        </el-submenu>
 
        <el-submenu index="6">
-         <template slot="title"><i class="iconfont icon-sitting"></i><span slot="title">达达</span></template>
-         <el-menu-item index="/manage/accountList">账号列表</el-menu-item>
+         <template slot="title">
+          <i class="iconfont icon-sitting"></i>
+          <span slot="title">达达</span>
+        </template>
+        <el-menu-item index="/manage/accountList">账号列表</el-menu-item>
+        <el-menu-item index="/manage/dadaTips">达达小费设置</el-menu-item>
        </el-submenu>
 
      </el-menu>
