@@ -117,7 +117,7 @@
 		</div>
 		<!-- 修改 -->
 		<el-dialog
-		  title="添加时间段"
+		  title="修改达达小费"
 		  :visible.sync="dialogStauts['update']" class="dialog-title text-center">
 		  <div>
 		  	  <span>
@@ -172,7 +172,7 @@
 		  	  </div>
 		  	  <span>
 		  	  	  <el-time-picker
-				    v-model="section.startTime"
+				    v-model="addTimeLine.startTime"
 				    range-separator="至"
 				    value-format="HH:mm:ss"
 				    start-placeholder="开始时间"
@@ -181,7 +181,7 @@
 				  </el-time-picker>
 				  至
 				  <el-time-picker
-				    v-model="section.endTime"
+				    v-model="addTimeLine.endTime"
 				    value-format="HH:mm:ss"
 				    range-separator="至"
 				    start-placeholder="开始时间"
@@ -193,14 +193,14 @@
 				  自动添加小费: 
 				  <el-input class="tips-input"
 				    placeholder="¥小数点后一位"
-				    v-model="section.tips">
+				    v-model="addTimeLine.tips">
 				  </el-input>
 			  </span>
 		  </div>
 		  <div class="text-center p-t-10 m-t-10">
 			  <span slot="footer" class="dialog-footer">
 			    <el-button @click="dialogStauts['tips'] = false">取 消</el-button>
-			    <el-button type="primary" @click="updateTime(2)">确 定</el-button>
+			    <el-button type="primary" @click="addTime(2)">确 定</el-button>
 			  </span>
 		  </div>
 		</el-dialog>
@@ -228,7 +228,7 @@
 				addTimeLine: {
 					startTime: '',
 					endTime: '',
-					value: ''
+					tips: ''
 				},
 				tipsStatus: {
 					0: '关闭',
@@ -255,7 +255,7 @@
 					this.saveDadaTip(info);
 				}
 			},
-
+			//保存达达配置
 			saveDadaTip(info) {
 				fetch.fetchPost('/dadaConfig/updateDadaTip', {
 					dId: info.id,
@@ -273,6 +273,7 @@
 
 				})
 			},
+			//开启关闭达达配送
 			onOffDadaTips() {
 				let status = this.open === true ? 1 : 0;
 				fetch.fetchPost('/dadaConfig/updateDadaTipSet', {
@@ -286,6 +287,7 @@
 
 				})
 			},
+			//删除
 			deleteDadaTip(info) {
 				var res = confirm('你确定要删除吗?');
 				if(res) {
@@ -304,6 +306,7 @@
 					})
 				}
 			},
+			//添加时间段
 			addTime(type, info) {
 				if(type == 1) {
 					this.dialogStauts['tips'] = true;
@@ -318,9 +321,16 @@
 				fetch.fetchPost('/dadaConfig/insertDadaTip', {
 					startTime: this.addTimeLine.startTime,
 					endTime: this.addTimeLine.endTime,
-					tips: this.addTimeLine.value	
+					tips: this.addTimeLine.tips	
 				}).then(res => {
-
+					if(res.code == 0) {
+						this.$message({
+				          message: res.msg,
+				          type: 'success'
+				        });
+				        this.dialogStauts['tips'] = false;
+				        this.getList();
+					}
 				}).catch(res => {
 
 				})
