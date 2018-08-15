@@ -26,7 +26,7 @@ router.beforeEach((to, from, next) => {
 			next('/manage');
 		} else {
 			next();
-		} 
+		}
 	} else {
 		if(localStorage.token) {
 			next();

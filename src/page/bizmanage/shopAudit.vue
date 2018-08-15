@@ -1019,7 +1019,7 @@
 				} else {
 					params['type'] = 2;
 				}
-				fetch.fetchPost('/businessmanage/v3.0/auditMerchantData', params)
+				fetch.fetchPost('businessmanage/v3.0/auditMerchantData', params)
 				.then(res => {
 					this.$message({
 			          message: res.msg,
@@ -1074,7 +1074,7 @@
 			},
 			//提交编辑信息接口
 			commitShopInfo(params) {
-				fetch.fetchPost('/businessmanage/v3.0/editMerchantData', params)
+				fetch.fetchPost('businessmanage/v3.0/editMerchantData', params)
 				.then(res => {
 					this.$message({
 			          message: res.msg,
@@ -1158,7 +1158,7 @@
 			},
 			// 根据区编码查询 省市编码
 			getProvinceCityCode(districtCode) {
-				fetch.fetchPost('/businessmanage/toDistrictCode', {
+				fetch.fetchPost('businessmanage/toDistrictCode', {
 					districtCode: districtCode
 				}).then(res => {
 					let  data = res.data;
@@ -1170,7 +1170,7 @@
 			},
 			//根据区域编码查询商圈
 			getBusiness(districtCode) {
-				fetch.fetchPost('/sysDistrictManage/getByDistrictCode', {
+				fetch.fetchPost('sysDistrictManage/getByDistrictCode', {
 					districtCode: districtCode
 				}).then(res => {
 					this.businessNameList = res.data;
@@ -1180,7 +1180,7 @@
 			},
 			//获取行业类型
 			getIndustry() {
-				fetch.fetchPost('/industryManage/industryList',{}).
+				fetch.fetchPost('industryManage/industryList',{}).
 				then(res => {
 					this.industryData = res.data;
 					for(let item of res.data) {
@@ -1207,7 +1207,7 @@
 			},
 			// 获取店铺资料
 			getInfo() {
-				fetch.fetchPost('/businessmanage/seeCertification', {
+				fetch.fetchPost('businessmanage/seeCertification', {
 					shopAuthenticateId: this.shopAuthenticateId
 				}).then(res => {
 					this.shopInfo = res.data;

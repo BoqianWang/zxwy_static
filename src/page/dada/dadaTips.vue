@@ -257,7 +257,7 @@
 			},
 			//保存达达配置
 			saveDadaTip(info) {
-				fetch.fetchPost('/dadaConfig/updateDadaTip', {
+				fetch.fetchPost('dadaConfig/updateDadaTip', {
 					dId: info.id,
 					startTime: info.startTime,
 					endTime: info.endTime,
@@ -276,7 +276,7 @@
 			//开启关闭达达配送
 			onOffDadaTips() {
 				let status = this.open === true ? 1 : 0;
-				fetch.fetchPost('/dadaConfig/updateDadaTipSet', {
+				fetch.fetchPost('dadaConfig/updateDadaTipSet', {
 					status: status,
 				}).then(res => {
 					this.$message({
@@ -291,7 +291,7 @@
 			deleteDadaTip(info) {
 				var res = confirm('你确定要删除吗?');
 				if(res) {
-					fetch.fetchPost('/dadaConfig/deleteDadaTip', {
+					fetch.fetchPost('dadaConfig/deleteDadaTip', {
 						dId: info.id
 					}).then(res => {
 						if(res.code == 0) {
@@ -318,7 +318,7 @@
 			//添加小费
 			addDadaTips() {
 				// console.log(this.addTimeLine);
-				fetch.fetchPost('/dadaConfig/insertDadaTip', {
+				fetch.fetchPost('dadaConfig/insertDadaTip', {
 					startTime: this.addTimeLine.startTime,
 					endTime: this.addTimeLine.endTime,
 					tips: this.addTimeLine.tips	
@@ -337,7 +337,7 @@
 			},
 			//获取时间段列表
 			getList() {
-				fetch.fetchPost('/dadaConfig/dadaTipSet', {
+				fetch.fetchPost('dadaConfig/dadaTipSet', {
 
 				}).then(res => {
 					this.list = res.data;

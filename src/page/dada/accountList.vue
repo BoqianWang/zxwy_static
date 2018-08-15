@@ -187,7 +187,7 @@
 			//开通门店
 			openAccount(info) {
 				let bizId = info.bizId;
-				fetch.fetchPost('/dadaConfig/openDadaStore', {
+				fetch.fetchPost('dadaConfig/openDadaStore', {
 					bizId: bizId
 				}).then(res => {
 					this.$message({
@@ -202,7 +202,7 @@
 			//注册达达商户
 			registerAccount(info) {
 				let bizId = info.bizId;
-				fetch.fetchPost('/dadaConfig/auditDada', {
+				fetch.fetchPost('dadaConfig/auditDada', {
 					bizId: bizId,
 					type: 1
 				}).then(res => {
@@ -219,7 +219,7 @@
 			getAccoutDetial(info) {
 				let dadaId = info.dadaId;
 				this.dialogStauts['editDetail'] = true;
-				fetch.fetchPost('/dadaConfig/dadaDetail', {
+				fetch.fetchPost('dadaConfig/dadaDetail', {
 					dadaId: dadaId
 				}).then(res => {
 					this.accoutDetial = res.data;
@@ -238,7 +238,7 @@
 		      this.getAcountList();
 		    },
 			getAcountList() {
-				fetch.fetchPost('/dadaConfig/dadaList', this.params).then(res => {
+				fetch.fetchPost('dadaConfig/dadaList', this.params).then(res => {
 					let result = res.data;
 					this.list = result['list'];
 					this.params['pageSize'] = result.pageSize;

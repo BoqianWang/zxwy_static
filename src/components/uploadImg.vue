@@ -5,6 +5,7 @@
 				<el-button size="small" class="width-100" type="primary" @click="viewImage">{{'预览'}}</el-button>
 				<el-upload class="upload-img m-t-10" 
 				:show-file-list="false" 
+				:name="fileName"	 
 				:action="uploadUrl" 
 				:data="imgParams" 
 				:auto-upload="true" 
@@ -57,18 +58,19 @@
 <script>
 	/**
 	 * 图片上传组件
-	 * <uploadImg :imgParams="{...}" v-model='...' url=".."></uploadImg>
+	 * <uploadImg :imgParams="{...}" v-model='...' url=".." fileName="file"></uploadImg>
 	 * imgParams  上传图片的参数
-	 * src		  当前图片路径
 	 * url        上传图片地址   可填
+	 * fileName   上传文件字段   默认 file
 	 */
 	import api from '../config/fetch.js';
 	export default {
-		props: ['imgParams', 'value'],
+		props: ['imgParams', 'value' , "fileName"],
 		data() {
 			return {
+				// fileName: 'file',
 				//请求地址
-				uploadUrl: this.url || api.baseURL + '/businessmanage/v3.0/file',
+				uploadUrl: this.url || api.baseURL + 'businessmanage/v3.0/file',
 				percent: 50,
 				//是否显示进度条
 				progressShow: false,
@@ -88,7 +90,9 @@
 			}
 		},
 		mounted() {
+
 			this.imgParams['token'] = localStorage.token;
+			// console.log(this.imgParams)
 		},
 		methods: {
 			//预览图片

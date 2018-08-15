@@ -55,7 +55,23 @@ const takeoutOrder = r => require.ensure([],()=>r(require('../page/order/takeout
 const takeoutOrderDetail = r => require.ensure([],()=>r(require('../page/order/takeoutOrderDetail.vue')),'takeoutOrderDetail');
 
 const dadaTips = r => require.ensure([],()=>r(require('../page/dada/dadaTips.vue')),'dadaTips');
-//店铺
+
+
+
+// 旅游模块begin
+
+const productlist = r => require.ensure([],()=>r(require('../page/lvyou/productList.vue')),'productlist');
+
+const editproduct = r => require.ensure([],()=>r(require('../page/lvyou/editProduct.vue')),'editproduct');
+
+const lyorderlist = r => require.ensure([],()=>r(require('../page/lvyou/lvyouOrder.vue')),'lyorderlist');
+
+const huiyuanlist = r => require.ensure([],()=>r(require('../page/lvyou/huiyuanList.vue')),'huiyuanList');
+
+const lvmmlist = r => require.ensure([],()=>r(require('../page/lvyou/lvmamaProductList.vue')),'lvmmlist');
+
+// 旅游模块end
+
 export default{
   routes:[
   {
@@ -162,18 +178,18 @@ export default{
     },
     {
       path: 'accountList',
-      component: accountList, 
+      component: accountList,
       meta: {
         title: '达达账号列表'
       }
     },
     {
       path: 'takeoutOrder',
-      component: takeoutOrder, 
+      component: takeoutOrder,
       meta: {
         title: '外卖订单监控'
       }
-    }, 
+    },
     {
       path: 'takeoutOrderDetail',
       component: takeoutOrderDetail,
@@ -187,9 +203,44 @@ export default{
       meta: {
         title: '达达小费设置'
       }
+    },
+    // 旅游模块 begin
+    {
+      path: 'productlist',
+      component: productlist,
+      meta: {
+        title: '旅游产品库'
+      }
+    },
+    {
+      path: 'editproduct',
+      component: editproduct,
+      meta: {
+        title: '编辑产品'
+      }
+    },
+    {
+      path: 'lyorderlist',
+      component: lyorderlist,
+      meta: {
+        title: '旅游订单管理'
+      }
+    },
+    {
+      path: 'huiyuanlist',
+      component: huiyuanlist,
+      meta: {
+        title: '会员管理'
+      }
+    },
+    {
+      path: 'lvmmlist',
+      component: lvmmlist,
+      meta: {
+        title: '驴妈妈商品管理'
+      }
     }
-
-
+    // 旅游模块 end
     ]
   }]
 }

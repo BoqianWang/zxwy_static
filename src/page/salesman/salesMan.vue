@@ -152,7 +152,7 @@
 					this.Dialog('show', 'editSalesManDialog');
 				}
 				else if(type == 2) {
-					fetch.fetchPost('/sysAccount/eidtSalesman', this.editSalesManFrom).then(res => {
+					fetch.fetchPost('sysAccount/eidtSalesman', this.editSalesManFrom).then(res => {
 						for(let i in this.editSalesManFrom) {
 							this.section[i] = this.editSalesManFrom[i];
 						}
@@ -173,7 +173,7 @@
 		    },
 			//添加业务员
 			addSalesMan() {
-				fetch.fetchPost('/sysAccount/addSalesman', this.formDate).then(res => {
+				fetch.fetchPost('sysAccount/addSalesman', this.formDate).then(res => {
 					this.$message({
 			           message: res.msg,
 			           type: 'success'
@@ -187,7 +187,7 @@
 			},
 			//获取业务员列表
 			getSalesManList(params = {}) {
-				fetch.fetchPost('/sysAccount/getByList', params).then(res => {
+				fetch.fetchPost('sysAccount/getByList', params).then(res => {
 					let result = res.data;
 					this.salesManList = result.list;
 					this.params = {

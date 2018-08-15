@@ -349,8 +349,124 @@ export default{
      return fetch.fetchPost('bizServiceRateManage/getById',{bizId:bizId});
    },
 
-   /**
-    * 编辑认证资料
-    */
-   
+// 旅游 begin
+/**
+ * 平台产品列表
+ */
+lvyouProductList:function(pageNo,keyword,status,sorted){
+  return fetch.fetchPost('tour/platproducts/platProductInfoList',{pageNo:pageNo,keyword:keyword,status:status,sorted:sorted}, 'travleApi');
+},
+/**
+ * 新增产品
+ */
+lvyouCrealeProduct:function(name){
+  return fetch.fetchPost('tour/platproducts/createProduct',{platProduName:name}, 'travleApi');
+},
+/**
+ * 搜索产品
+ */
+searchProduct:function(keyword){
+  return fetch.fetchPost('tour/platproducts/searchProductInfo',{keyword:keyword}, 'travleApi');
+},
+/**
+ * 编辑平台商品
+ */
+lvyoueditProduct:function(platProductId,platProduName,relationWay,beginDate,endDate,productId,
+  goodsId,goodsName,freeStatus,freeDays,freeBeginDate,freeEndDate,freeDate,freePrice,freeStock,
+  disStatus,productImages,marketPrice,platGoodsId){
+  return fetch.fetchPost('tour/platgoods/editPlatGoods',{
+    platProductId:platProductId,
+    platProduName:platProduName,
+    relationWay:relationWay,
+    beginDate:beginDate,
+    endDate:endDate,
+    productId:productId,
+    goodsId:goodsId,
+    goodsName:goodsName,
+    freeStatus:freeStatus,
+    freeDays:freeDays,
+    freeBeginDate:freeBeginDate,
+    freeEndDate:freeEndDate,
+    freeDate:freeDate,
+    freePrice:freePrice,
+    freeStock:freeStock,
+    disStatus:disStatus,
+    productImages:productImages,
+    marketPrice:marketPrice,
+    platGoodsId:platGoodsId
+  }, 'travleApi');
+},
+/**
+ * 新增平台商品
+ */
+lvyouaddProduct:function(platProductId,platProduName,relationWay,beginDate,endDate,productId,goodsId
+,goodsName,freeStatus,freeDays,freeBeginDate,freeEndDate,freeDate,freePrice,freeStock,disStatus,productImages,marketPrice){
+  return fetch.fetchPost('tour/platgoods/createPlatGoods',{
+    platProductId:platProductId,
+    platProduName:platProduName,
+    relationWay:relationWay,
+    beginDate:beginDate,
+    endDate:endDate,
+    productId:productId,
+    goodsId:goodsId,
+    goodsName:goodsName,
+    freeStatus:freeStatus,
+    freeDays:freeDays,
+    freeBeginDate:freeBeginDate,
+    freeEndDate:freeEndDate,
+    freeDate:freeDate,
+    freePrice:freePrice,
+    freeStock:freeStock,
+    disStatus:disStatus,
+    productImages:productImages,
+    marketPrice:marketPrice
+  }, 'travleApi');
+},
+/**
+ * 查询产品详情
+ */
+productDetail:function(platProductId){
+  return fetch.fetchPost('tour/platproducts/getProductById',{platProductId:platProductId}, 'travleApi');
+},
+/**
+ * 上下架 。删除
+ */
+updateProduct:function(platProductId,status,sorted){
+  return fetch.fetchPost('tour/platproducts/updateProduct',{platProductId:platProductId,status:status,sorted:sorted}, 'travleApi');
+},
+/**
+ * 订单列表
+ */
+lyorderList:function(pageNo,phone,orderStatus,orderTime,orderType){
+  return fetch.fetchPost('tour/order/orderList',{pageNo:pageNo,
+                          phone:phone,orderStatus:orderStatus,
+                          orderTime:orderTime,orderType:orderType}, 'travleApi');
+},
+/**
+ * 下单
+ */
+xiadanProduct:function(platOrderId){
+  return fetch.fetchPost('tour/order/readyToCreateLvmamaOrder',{platOrderId:platOrderId}, 'travleApi');
+},
+/**
+ * 下单
+ */
+cancelProduct:function(platOrderId){
+  return fetch.fetchPost('tour/order/readyToLvmamaOrderCancel',{platOrderId:platOrderId}, 'travleApi');
+},
+/**
+ * 会员列表
+ */
+memberList:function(pageNo,keyword){
+  return fetch.fetchPost('tour/member/memberList',{pageNo:pageNo,keyword:keyword}, 'travleApi');
+},
+/**
+ * 驴妈妈商品列表
+ */
+lvmmList:function(pageNo,keyword){
+  return fetch.fetchPost('tour/platproducts/getProductList',{pageNo:pageNo,keyword:keyword}, 'travleApi');
+}
+// 旅游 end
+
+
 }

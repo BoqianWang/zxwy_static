@@ -69,6 +69,18 @@
         <el-menu-item index="/manage/dadaTips">达达小费设置</el-menu-item>
        </el-submenu>
 
+
+       <el-submenu index="8">
+         <template slot="title">
+          <i class="iconfont icon-sitting"></i>
+          <span slot="title">旅游</span>
+        </template>
+        <el-menu-item index="/manage/productlist">产品列表</el-menu-item>
+        <el-menu-item index="/manage/lyorderlist">旅游订单列表</el-menu-item>
+        <el-menu-item index="/manage/huiyuanlist">会员管理</el-menu-item>
+        <el-menu-item index="/manage/lvmmlist">驴妈妈商品库</el-menu-item>
+       </el-submenu>
+
      </el-menu>
    </div>
     <el-container>

@@ -6,25 +6,25 @@ import VueRouter from 'vue-router';
 import routerConfig from '../router/router';
 Vue.use(VueRouter);
 var router = new VueRouter(routerConfig);
+//服务器api接口列表
+let apiServer = {
+    baseApi: 'http://operator.zhongxiang51.com/',
+    travleApi: 'https://opt.zhongxiang51.com/',
+
+    // baseApi: 'http://112.74.84.94:8081/zxwy-operator/',
+    // travleApi: 'http://test.zhongxiang51.com/zx51-manager/'
+}
+
+window.apiServer = apiServer;
 
 // axios 配置
 axios.defaults.timeout = 1000000;    //响应时间
-// axios.defaults.withCredentials=true;
-// axios.defaults.headers.common['faker'] = '123333';
-// axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
 
-//本地配置接口地址
-// axios.defaults.baseURL = 'http://192.169.18.88:9001/zxwy-operator';
-// axios.defaults.baseURL = 'http://192.169.18.77:8082/zxwy-operator'; 
-// axios.defaults.baseURL = 'http://test.zhongxiang51.com/zxwy-operator'; 
-//测试配置接口地址
-axios.defaults.baseURL = 'http://operator.zhongxiang51.com'; //正式配置接口地址
+
 //添加请求拦截器
 axios.interceptors.request.use((config) => {
   // 在发送请求之前做某件事
-    // if (config.method === 'post') {
-    //     config.data = qs.stringify(config.data);
-    // }
+
     config.data = qs.stringify(config.data);
     config.headers = {
       'Content-Type':'application/x-www-form-urlencoded;charset=UTF-8'
@@ -39,20 +39,6 @@ axios.interceptors.request.use((config) => {
     return Promise.reject(error);
 });
 
-//返回状态判断(添加响应拦截器)
-// axios.interceptors.response.use((res) =>{
-// 	//对响应数据做些事
-//     if(res.data.code==0){
-//         // _.toast(res.data.msg);
-//         return Promise.reject(res);
-//     }
-//     return res;
-// }, (error) => {
-//     // _.toast("网络异常", 'fail');
-//     // console.log('网络异常');
-//     return Promise.reject(error);
-// });
-
 /**
  *
  * POST 请求方式
@@ -63,7 +49,8 @@ axios.interceptors.request.use((config) => {
 
 export default {
     //fetchPost  请求方式
-    fetchPost: function(url, params) {
+    fetchPost: function(url, params, type = 'baseApi') {
+        url = apiServer[type] + url;
         return new Promise((resolve, reject) => {
             axios.post(url, params)
                 .then(response => {
@@ -72,11 +59,8 @@ export default {
                     }else {
                       Message.error(response.data.msg);
                       if(response.data.code == 999){
-                        // router.replace({
-                        //   path: '/'
-                        // })
-                        localStorage.token = ''
-                        location.reload();
+                           localStorage.token = ''
+                        // location.reload();
                       }else{
                         reject(response.data.code);
                       }
@@ -84,20 +68,16 @@ export default {
 
                 })
                 .catch((error) => {
-                  Message.error(String(error));
-                  reject(error)
+                    Message.error(String(error));
+                    reject(error)
                 })
         })
     },
 
 
     //GET 请求方式
-    fetchGet: function(url, params) {
-      // console.log(params);
-      // if(sessionStorage.token){
-      //   params.token = sessionStorage.token;
-      // }
-      // console.log(params);
+    fetchGet: function(url, params, type = 'baseApi') {
+        url = apiServer[type] + url;
         return new Promise((resolve, reject) => {
             axios.get(url, {
                     params: params
@@ -118,18 +98,5 @@ export default {
 
     },
     //基础接口
-    baseURL: axios.defaults.baseURL
+    baseURL: apiServer['baseApi']
 }
-
-
-// global.bird = "https://bird.ioliu.cn/v1/?url=";
-//
-// //外网测试环境 api代理
-// const Proxy = "https://bird.ioliu.cn/v1/?url=";
-//
-// //定义api 接口
-// global.apiurl = {
-//     zhihu: function() {
-//         var zh = Proxy + "https://zhuanlan.zhihu.com/api/columns/wxyyxc1992";
-//     }
-// }
